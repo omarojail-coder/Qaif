@@ -33,7 +33,8 @@ def main():
             health = json.loads(call('/api/health')[0])
             assert health['ok'] and health['demo_mode']
             break
-        except (URLError, AssertionError):
+        except (URLError, ConnectionError, AssertionError):
+            # Docker can forward the socket before Uvicorn finishes startup.
             if attempt == 29:
                 raise RuntimeError('Service did not become healthy') from None
             time.sleep(1)
