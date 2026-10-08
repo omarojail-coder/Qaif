@@ -50,7 +50,7 @@ import LpgSaddleDashboard from "./LpgSaddleDashboard";
 import LpgCylindersPage from "./LpgCylindersPage";
 import LpgInspectionsPage from "./LpgInspectionsPage";
 import LpgCustomerReport from "./LpgCustomerReport";
-import { GUEST_MODE } from "./guestMode";
+import { GUEST_MODE, STATIC_GUEST_BUILD, enterGuestMode, leaveGuestMode } from "./guestMode";
 import { loadShipmentTrips, pageFromHash, readShipmentSelection, saveShipmentSelection } from "./lpgTripSelection";
 import type { ShipmentTrip } from "./lpgMapData";
 import FacilityIcon from "./FacilityIcon";
@@ -672,6 +672,15 @@ function App() {
               تسجيل الدخول
             </button>
           </form>
+          <div className="demo-login">
+            <button type="button" disabled={busy} onClick={() => {
+              enterGuestMode();
+              setData(null);
+              setUser({ id: 'guest', name: 'زائر قائف', role: 'viewer' });
+              goto('map');
+            }}>الدخول كزائر <ArrowLeft size={17}/></button>
+            <small>عرض الشحنات والأسطوانات والتقارير دون تسجيل بيانات دخول.</small>
+          </div>
           {["localhost", "127.0.0.1", "[::1]"].includes(location.hostname) && <div className="demo-login">
             <button
               disabled={busy}
@@ -850,6 +859,10 @@ function App() {
           ))}
         </nav>
         <div className="sidebar-bottom">
+          {GUEST_MODE && !STATIC_GUEST_BUILD && <button onClick={() => {
+            leaveGuestMode();
+            location.assign('/');
+          }}><LogOut size={19}/><span>الدخول بحساب النظام</span></button>}
           {!GUEST_MODE && <button
             aria-label="الإعدادات"
             onClick={() => goto("settings")}
