@@ -4,10 +4,20 @@
 
 ## ما جهز للنشر
 
+### عرض الزائر على Vercel
+
+استورد المستودع واختر `Root Directory = frontend` و`Framework Preset = Vite` و`Output Directory = dist`. إعداد `frontend/vercel.json` يشغّل `npm run build:guest`؛ لا تحتاج Environment Variables. إذا كنت قد كتبت Build Command يدويًا في لوحة Vercel، اجعله `npm run build:guest` ثم أعد النشر.
+
+يفتح الزائر النوافذ الخمس دون حساب، باستخدام ملفات سيناريو LPG العامة في `frontend/public/guest-data`. تتضمن القراءات ونتائج النموذج المحفوظة و189 هوية أسطوانة و6 مهام فحص توضيحية. لا تفتح هذه النسخة قاعدة البيانات ولا تسمح بالتعديل أو تشغيل AI جديد. QR يستخدم عنوان الموقع الحالي، ومسار `/cylinder/CYL-020-01` يفتح تقرير العميل مباشرة. زر PDF يفتح نافذة الطباعة؛ اختر «حفظ بصيغة PDF»، ويشمل التقرير أماكن الملاحظات التقديرية والإحداثيات وروابطها.
+
+لإعادة توليد الملفات من السيناريوهات فقط: `.venv\Scripts\python.exe tools\export_guest_demo.py`. لا يقرأ المصدر سجلات المستخدمين أو قاعدة البيانات. البناء العادي `npm run build` خارج Vercel يحتفظ بالدخول وخادم Python؛ اختبر عرض الزائر محليًا عبر `npm run build:guest -- --outDir ../work/guest-dist` ثم `npx vite preview --outDir ../work/guest-dist`.
+
+### الخادم الكامل
+
 - Docker يبني الواجهة ويشغل الخادم ومحرك AI على Linux، بمنفذ `PORT` الذي تحدده الاستضافة. يهيئ مجلد التخزين عند تركيب قرص جديد، ثم يشغل التطبيق بمستخدم `qaif` دون صلاحيات root.
 - `render.yaml` يجهز نسخة عرض مجانية على Render، و`deploy/render-persistent.yaml` يجهز خيار التخزين الدائم المدفوع.
 - يبقى `QAIF_DEMO_MODE=true` لعمل نوافذ LPG، مع `QAIF_PUBLIC_DEPLOYMENT=true` لمنع دخول المدير السريع حتى لو وصل الطلب من وكيل محلي.
-- الدخول إلى المنصة بحساب `admin` وكلمة المرور الخاصة التي تحددها في لوحة الاستضافة، وملفات الجلسة تستخدم Secure وHttpOnly.
+- الدخول إلى المنصة بحساب `admin` وكلمة المرور الخاصة التي تحددها في `QAIF_ADMIN_PASSWORD` في لوحة الاستضافة. يلزم 12 حرفًا على الأقل؛ إذا ظهرت رسالة `Public deployment requires a private QAIF_ADMIN_PASSWORD` فصحح القيمة في Environment ثم أعد النشر. ملفات الجلسة تستخدم Secure وHttpOnly.
 - تقرير العميل فقط متاح دون تسجيل دخول في `/cylinder/CYL-020-01`. بقية الصفحات وواجهات API تتطلب الدخول.
 - QR ورابط PDF يستخدمان `QAIF_PUBLIC_BASE_URL`، أو عنوان `RENDER_EXTERNAL_URL` الذي تضيفه Render تلقائيًا.
 - `.gitignore` و`.dockerignore` يستبعدان `.env` وقاعدة البيانات المحلية وكلمات المرور وسجلات التشغيل.

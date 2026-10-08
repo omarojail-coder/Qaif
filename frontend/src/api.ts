@@ -1,10 +1,15 @@
 export type RecordData = { id: string; [key: string]: any };
 export type Snapshot = { [key: string]: RecordData[] | any };
+import { GUEST_MODE } from './guestMode';
 export async function api<T = any>(
   path: string,
   body?: unknown,
   method?: string,
 ): Promise<T> {
+  if (GUEST_MODE) {
+    const { guestApi } = await import('./guestApi');
+    return guestApi<T>(path, body, method);
+  }
   const form = body instanceof FormData;
   const response = await fetch("/api" + path, {
     method: method || (body === undefined ? "GET" : "POST"),

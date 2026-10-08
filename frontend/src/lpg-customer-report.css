@@ -50,3 +50,31 @@
 .customer-disclosure { display:flex; gap:9px; align-items:flex-start; color:var(--muted); font-size:11px; line-height:1.9; margin:0; }.customer-disclosure svg { flex-shrink:0; margin-top:2px; }
 @media(max-width:760px) { .customer-search { grid-template-columns:1fr; gap:12px; }.customer-report-layout { grid-template-columns:1fr; }.customer-share { display:grid; grid-template-columns:1fr 1fr; align-items:center; }.customer-share > a:has(img) { grid-column:1; grid-row:2/6; }.customer-share > h3,.customer-share > p,.customer-share-url,.customer-share > small,.customer-share > .customer-action-error { grid-column:1/-1; }.customer-share img { width:150px; height:150px; } }
 @media(max-width:480px) { .customer-report .panel { padding:18px; }.customer-public-shell > main { padding:20px 14px 0; }.customer-public-header { padding:12px 18px; }.customer-public-header > span { font-size:10px; }.customer-identity { grid-template-columns:1fr; gap:15px; }.customer-identity h2 { font-size:27px; }.customer-cylinder { min-height:140px; flex-direction:row; gap:16px; }.customer-cylinder svg { width:85px; height:122px; }.customer-cylinder figcaption { position:static; font-size:11px; }.customer-cylinder > span { display:none; }.customer-facts { gap:14px 18px; }.customer-search > div { flex-wrap:wrap; }.customer-search input { min-width:160px; }.customer-search button { flex:1; }.customer-current-route { flex-wrap:wrap; }.customer-current-route strong { font-size:12px; }.customer-section-heading { flex-wrap:wrap; gap:0; }.customer-section-heading h3 { margin-bottom:8px; }.customer-section-heading > span { margin-bottom:20px; }.customer-monitoring-values { grid-template-columns:1fr; gap:12px; }.customer-monitoring-values > div { display:flex; align-items:center; justify-content:space-between; }.customer-share { grid-template-columns:1fr; }.customer-share > a:has(img) { grid-column:auto; grid-row:auto; }.customer-trip-dates { flex-direction:column; }.customer-region-path > div { font-size:12px; } }
+.customer-print-notes { display:none; }
+.customer-print-link { display:none; }
+.customer-observations > p { font-size:11px; color:var(--muted); line-height:1.8; }
+.customer-observation-journey { padding:14px 0; border-top:1px solid var(--line); }
+.customer-observation-journey h4 { margin:0 0 5px; font-size:13px; }
+.customer-observation-journey > p,.customer-observation-journey > small { font-size:11px; color:var(--muted); }
+.customer-observation-journey article { display:grid; gap:5px; margin-top:12px; padding:12px; border-inline-start:3px solid #d9cdec; background:#faf8fd; font-size:11px; break-inside:avoid; }
+.customer-observation-journey article span[dir=ltr] { text-align:right; }
+@media print {
+  @page { size:A4; margin:13mm; }
+  html,body,#root,.app,.app-main,.customer-public-shell { background:#fff!important; min-height:0!important; height:auto!important; width:auto!important; min-width:0!important; overflow:visible!important; }
+  .sidebar,.topbar,.app-footer,.guest-mode-notice,.page-content > .page-heading,.customer-search,.customer-page-title,.customer-public-header,.toast { display:none!important; }
+  .app-main,.page-content,.customer-public-shell > main { margin:0!important; padding:0!important; max-width:none!important; }
+  .app-shell { display:block!important; min-height:0!important; }
+  .customer-report { display:block; color:#222; font-size:11px; }
+  .customer-report-layout,.customer-main { display:block; }
+  .customer-report .panel { padding:12px; margin:0 0 12px; box-shadow:none; }
+  .customer-identity { break-inside:avoid; grid-template-columns:1fr 110px; }
+  .customer-cylinder { min-height:145px; }.customer-cylinder svg { width:80px; height:115px; }
+  .customer-identity h2 { font-size:23px; margin-bottom:10px; }
+  .customer-history > ol > li,.customer-route,.customer-monitoring,.customer-observation-journey article { break-inside:avoid; }
+  .customer-history details { display:none; }.customer-print-notes { display:block; padding-inline-start:18px; font-size:10px; }
+  .customer-share { display:none!important; }
+  .customer-print-link { display:flex; align-items:center; gap:12px; break-inside:avoid; margin-top:16px; font-size:10px; }
+  .customer-print-link img { width:85px; height:85px; }.customer-print-link a { overflow-wrap:anywhere; }
+  .customer-disclosure { margin-top:16px; font-size:10px; }
+  .customer-observations a { color:#43316d; text-decoration:underline; }
+}

@@ -9,6 +9,7 @@ import {
   CheckSquare,
   Search,
   Bell,
+  Info,
   Plus,
   ChevronLeft,
   X,
@@ -49,6 +50,7 @@ import LpgSaddleDashboard from "./LpgSaddleDashboard";
 import LpgCylindersPage from "./LpgCylindersPage";
 import LpgInspectionsPage from "./LpgInspectionsPage";
 import LpgCustomerReport from "./LpgCustomerReport";
+import { GUEST_MODE } from "./guestMode";
 import { loadShipmentTrips, pageFromHash, readShipmentSelection, saveShipmentSelection } from "./lpgTripSelection";
 import type { ShipmentTrip } from "./lpgMapData";
 import FacilityIcon from "./FacilityIcon";
@@ -83,6 +85,7 @@ const labels: { [key: string]: string } = {
   drone: "مشغّل الدرون",
   inspector: "مفتش",
   admin: "مدير النظام",
+  viewer: "وضع زائر · بيانات عرض",
   rgb: "صور عادية RGB",
   thermal: "صور حرارية",
   both: "عادية وحرارية",
@@ -117,6 +120,10 @@ const pages = [
   ["sources", "التقارير والسجل", FileText],
   ["demo", "المحاكي", Activity],
 ] as const;
+const availablePage = () => {
+  const page = pageFromHash();
+  return GUEST_MODE && !pages.some(([key]) => key !== 'demo' && key === page) ? 'map' : page;
+};
 const fmt = (date?: string) =>
   date
     ? new Date(date).toLocaleString(DISPLAY_LOCALE, {
@@ -310,7 +317,7 @@ function Brand({ large = false }: { large?: boolean }) {
 function App() {
   const [user, setUser] = useState<any>(undefined);
   const [data, setData] = useState<Snapshot | null>(null);
-  const [page, setPage] = useState(pageFromHash);
+  const [page, setPage] = useState(availablePage);
   const [selected, setSelected] = useState("S-12");
   const [shipmentSelection, setShipmentSelection] = useState<ShipmentTrip | null>(readShipmentSelection);
   const [shipmentTrips, setShipmentTrips] = useState<ShipmentTrip[]>([]);
@@ -366,7 +373,7 @@ function App() {
   }, [user]);
   useEffect(() => {
     const listener = () => {
-      setPage(pageFromHash());
+      setPage(availablePage());
       setRouteHash(location.hash);
       setShipmentSelection(readShipmentSelection());
       setSearch("");
@@ -396,7 +403,7 @@ function App() {
     return () => { alive = false; };
   }, [page, shipmentRouteId, shipmentRetry]);
   useEffect(() => {
-    if (!user) return;
+    if (!user || GUEST_MODE) return;
     let ws: WebSocket;
     let retry: ReturnType<typeof setTimeout>;
     let stopped = false;
@@ -517,6 +524,11 @@ function App() {
     setStatusFilter("all");
   };
   const choose = (id: string) => {
+    if (GUEST_MODE) {
+      if (id.startsWith('CYL-')) goto(`sources?serial=${id}`);
+      else if (id.startsWith('S-')) goto(`saddle?trip=TRIP-${id.slice(2).padStart(3, '0')}`);
+      return;
+    }
     setShipmentSelection(null);
     setSelected(id);
     if (id.startsWith("S-")) goto("pipe-saddle");
@@ -811,7 +823,7 @@ function App() {
         <Brand />
         <div className="sidebar-caption">منصة متابعة الأصول</div>
         <nav aria-label="التنقل الرئيسي">
-          {pages.map(([key, label, Icon]) => (
+          {pages.filter(([key]) => !GUEST_MODE || key !== 'demo').map(([key, label, Icon]) => (
             <button
               key={key}
               aria-label={label}
@@ -838,17 +850,17 @@ function App() {
           ))}
         </nav>
         <div className="sidebar-bottom">
-          <button
+          {!GUEST_MODE && <button
             aria-label="الإعدادات"
             onClick={() => goto("settings")}
             className={page === "settings" ? "active" : ""}
           >
             <Settings size={19} />
             <span>الإعدادات</span>
-          </button>
+          </button>}
           <div className="connection">
             <span className={`dot ${live ? "green" : "gray"}`} />
-            {live ? "تحديثات النظام متصلة" : "جاري إعادة الاتصال"}
+            {GUEST_MODE ? "وضع زائر · بيانات عرض" : live ? "تحديثات النظام متصلة" : "جاري إعادة الاتصال"}
           </div>
           {page === "demo" && <small>القياسات: محاكاة / استيراد ملفات</small>}
         </div>
@@ -865,22 +877,22 @@ function App() {
           <div className="global-search">
             <Search size={20} />
             <input
-              placeholder="ابحث عن منطقة أو خط أو أصل"
+              placeholder={GUEST_MODE ? "ابحث برقم الأسطوانة أو سراج الشحنة" : "ابحث عن منطقة أو خط أو أصل"}
               value={globalSearch}
               onChange={(e) => setGlobalSearch(e.target.value)}
               aria-label="البحث العام"
             />
             {globalSearch && (
               <div className="search-results">
-                {[...saddles, ...assets, ...data.pipelines]
-                  .filter((a: any) => a.name.includes(globalSearch))
+                {[...saddles, ...assets, ...data.pipelines, ...(GUEST_MODE ? data.cylinders : [])]
+                  .filter((a: any) => a.name.toLowerCase().includes(globalSearch.trim().toLowerCase()))
                   .slice(0, 8)
                   .map((a: any) => (
                     <button
                       key={a.id}
                       onClick={() => {
                         choose(a.id);
-                        if (!a.id.startsWith("S-")) goto("map");
+                        if (!GUEST_MODE && !a.id.startsWith("S-")) goto("map");
                         if (a.id.startsWith("P-")) setMapPipeline(a.id);
                         setGlobalSearch("");
                       }}
@@ -901,7 +913,7 @@ function App() {
               <Bell size={22} />
               {activeAlerts.length > 0 && <span>{activeAlerts.length}</span>}
             </button>
-            <span className="account-avatar">ع</span>
+            <span className="account-avatar">{GUEST_MODE ? 'ز' : 'ع'}</span>
             <div>
               <strong>{user.name}</strong>
               <small>{labels[user.role]}</small>
@@ -944,6 +956,7 @@ function App() {
           </section>
         )}
         <main className="page-content" id="main">
+          {GUEST_MODE && <p className="guest-mode-notice"><Info size={16}/><span>نسخة عرض للزائر — القراءات والرحلات توضيحية، ونتائج التحليل محفوظة من المحاكي. التعديل والفحص الفعلي عبر حساب النظام.</span></p>}
           {page === "map" && (
             <>
               {shellTitle("محطات تعبئة الغاز ومناطق التوزيع ورحلات سراج الشحنة")}

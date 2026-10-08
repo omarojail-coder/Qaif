@@ -1,0 +1,4 @@
+{
+  "buildCommand": "npm run build:guest",
+  "rewrites": [{ "source": "/cylinder/:path*", "destination": "/index.html" }]
+}

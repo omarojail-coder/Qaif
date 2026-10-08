@@ -579,3 +579,6 @@
     height: 29px;
   }
 }
+/* Public static viewer keeps the same LPG screens and clearly labels its data. */
+.guest-mode-notice { display:flex; align-items:flex-start; gap:8px; margin:0 0 18px; padding:10px 14px; border:1px solid var(--line); border-radius:6px; background:#f2effb; color:var(--accent-dark); font-size:11px; line-height:1.8; }
+.guest-mode-notice svg { flex-shrink:0; margin-top:2px; }
