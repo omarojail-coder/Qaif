@@ -1,0 +1,8 @@
+{
+  "event_type": "interface_wetting",
+  "start_s": 240,
+  "end_s": 480,
+  "set": {
+    "wet_path_open": true
+  }
+}

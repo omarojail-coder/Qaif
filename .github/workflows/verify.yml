@@ -1,0 +1,41 @@
+name: Verify Qaif deployment
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  linux-container:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build frontend and Linux runtime
+        run: docker build -f deploy/Dockerfile -t qaif-check .
+      - name: Run backend tests with official Linux XGBoost
+        run: >-
+          docker run --rm
+          -e QAIF_PUBLIC_DEPLOYMENT=false -e QAIF_SECURE_COOKIE=false
+          -e QAIF_DATA_DIR=/tmp/qaif-tests -e QAIF_ADMIN_PASSWORD=ci-test-password-only
+          qaif-check python -m unittest discover -s backend/tests -v
+      - name: Start public-mode container
+        run: >-
+          docker run -d --name qaif-check -p 8765:8765 -v qaif-check-data:/data
+          -e QAIF_ADMIN_PASSWORD=ci-test-password-only
+          -e QAIF_PUBLIC_BASE_URL=https://qaif.example.test
+          qaif-check
+      - name: Verify running website and all LPG sections
+        env:
+          QAIF_SMOKE_PASSWORD: ci-test-password-only
+        run: python3 deploy/smoke.py http://127.0.0.1:8765
+      - name: Show service logs if verification fails
+        if: failure()
+        run: docker logs qaif-check || true
+      - name: Stop verification container
+        if: always()
+        run: |
+          docker rm -f qaif-check || true
+          docker volume rm qaif-check-data || true

@@ -1,0 +1,42 @@
+{
+  "schema_version": "1",
+  "asset_id": "fixture_pipe_001",
+  "site_id": "fixture_site_001",
+  "base_episode_id": "constructed_smoke_test_001",
+  "scenario_family_id": "fixture_wet_path_opening",
+  "mechanism_id": "interface_wetting",
+  "inspired_by_case_id": "QC-02",
+  "evidence_level": "test_fixture",
+  "unknown_assumptions": [
+    "Opening time and wet_drive ramp are constructed for a software test, not measured in QC-02.",
+    "Saddle wetness transfer and measurement noise are not field-calibrated."
+  ],
+  "phases": [
+    {
+      "phase_id": "onset",
+      "event_type": "interface_wetting",
+      "start_s": 240,
+      "end_s": 300,
+      "changes": {
+        "wet_path_open": {"mode": "hold", "value": true},
+        "wet_drive": {"mode": "linear", "from": 0.2, "to": 1.0}
+      }
+    },
+    {
+      "phase_id": "continued_ingress",
+      "event_type": "interface_wetting",
+      "start_s": 300,
+      "end_s": 360,
+      "changes": {
+        "wet_path_open": {"mode": "hold", "value": true}
+      }
+    },
+    {
+      "phase_id": "recovery_observation",
+      "event_type": "normal_environment",
+      "start_s": 360,
+      "end_s": 480,
+      "changes": {}
+    }
+  ]
+}

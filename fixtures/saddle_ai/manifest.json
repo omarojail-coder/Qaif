@@ -1,0 +1,56 @@
+{
+  "ai_reference": {
+    "episode": "5112e015e61dc5e5",
+    "validation_index": 32,
+    "source": "saddle_mechanical_diversity_v4/development/dataset/5112e015e61dc5e5/observed.csv",
+    "sha256": "63f853cb594208dc6ffab67800b4ad1fc1cc7163330d91fc2f347edf77a4caf6",
+    "rows": 241,
+    "sample_interval_s": 5,
+    "baseline_verified": true
+  },
+  "ai_crack": {
+    "episode": "4fa6c1cdf8bc0c2d",
+    "validation_index": 3,
+    "source": "saddle_ai_xgboost_v1/dataset/4fa6c1cdf8bc0c2d/observed.csv",
+    "sha256": "7239b21bb632dff9d2e114497602b5287229eb66f71250371bf562b693686d52",
+    "rows": 241,
+    "sample_interval_s": 5,
+    "baseline_verified": true
+  },
+  "ai_thermal": {
+    "episode": "fa9df33b6d7d919e",
+    "validation_index": 2,
+    "source": "saddle_ai_xgboost_v1/dataset/fa9df33b6d7d919e/observed.csv",
+    "sha256": "525119dc23b5f5036e539cf117a9d071afc2aec0c5d1cd065a9d72963c782e99",
+    "rows": 241,
+    "sample_interval_s": 5,
+    "baseline_verified": true
+  },
+  "ai_wetness": {
+    "episode": "2186edb2d761921c",
+    "validation_index": 4,
+    "source": "saddle_ai_xgboost_v1/dataset/2186edb2d761921c/observed.csv",
+    "sha256": "ca95a6554a9b49582c877b07d00a4135d0ce577bbfa1cdd98873b6810983acca",
+    "rows": 241,
+    "sample_interval_s": 5,
+    "baseline_verified": true
+  },
+  "ai_h2s": {
+    "episode": "22309052efb6aab6",
+    "validation_index": 14,
+    "source": "saddle_ai_xgboost_v1/dataset/22309052efb6aab6/observed.csv",
+    "sha256": "2db8e941e130e37dfafeff52da7e55fb84232fc349ca4a0196a3aefe00645cf9",
+    "rows": 241,
+    "sample_interval_s": 5,
+    "baseline_verified": true
+  },
+  "ai_quality_control": {
+    "episode": "3917a2cefd459f96",
+    "validation_index": 0,
+    "source": "saddle_ai_xgboost_v1/dataset/3917a2cefd459f96/observed.csv",
+    "sha256": "609b3ead379dff8db7cd500e61fb6ea7b6d583d187b70bbe17ac21e965ba4bb1",
+    "rows": 241,
+    "sample_interval_s": 5,
+    "baseline_verified": true
+  }
+}

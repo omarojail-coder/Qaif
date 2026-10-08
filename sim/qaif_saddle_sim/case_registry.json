@@ -1,0 +1,65 @@
+{
+  "schema_version": "1",
+  "cases": [
+    {
+      "case_id": "QC-01",
+      "record_type": "observed_condition",
+      "title": "Robstown above-ground gas piping coating and atmospheric corrosion",
+      "installation": "above_ground_gas_facility",
+      "source_url": "https://primis.phmsa.dot.gov/enforcement-documents/420121018/420121018_Final%20Order_02282013_text.pdf",
+      "source_location": "Findings of violations, items 1-2",
+      "allowed_event_types": [],
+      "reason": "Coating disbondment and pitting were observed, but water-path timing and saddle response were not measured."
+    },
+    {
+      "case_id": "QC-02",
+      "record_type": "observed_condition",
+      "title": "Nuiqsut above-ground gas line water beneath damaged coating",
+      "installation": "above_ground_gas_pipeline",
+      "source_url": "https://primis.phmsa.dot.gov/enforcement-documents/520200010/520200010_NOPV%20PCP%20PCO_11182020.pdf",
+      "source_location": "Item 5, atmospheric corrosion, pages 3-4",
+      "allowed_event_types": ["interface_wetting"],
+      "reason": "Water beneath damaged coating supports only a case-inspired open-water-path mechanism, not a measured saddle waveform or corrosion rate."
+    },
+    {
+      "case_id": "QC-03",
+      "record_type": "failure",
+      "title": "Alaska Highway gas pig sending barrel rupture from internal corrosion",
+      "installation": "above_ground_gas_facility_component",
+      "source_url": "https://www.tsb.gc.ca/eng/rapports-reports/pipeline/2009/p09h0006/p09h0006.html",
+      "source_location": "Factual information, analysis, findings",
+      "allowed_event_types": [],
+      "reason": "The current straight-pipe saddle model cannot convert internal barrel corrosion and fatigue to a precursor signal."
+    },
+    {
+      "case_id": "QC-04",
+      "record_type": "failure",
+      "title": "Index 381 buried gas pipeline earth movement and girth weld failure",
+      "installation": "buried_gas_pipeline_analogue",
+      "source_url": "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2024-06/20230212-Gulf-South-Jackson-MS-Final2-May-2024.pdf",
+      "source_location": "Failure investigation and Index 381 RCA section 5.0",
+      "allowed_event_types": [],
+      "reason": "A spatial pipe-and-support/soil model is required before translating distant earth movement to a local saddle load."
+    },
+    {
+      "case_id": "QC-05",
+      "record_type": "failure",
+      "title": "Simonette Lateral buried gas pipeline external corrosion rupture",
+      "installation": "buried_gas_pipeline_analogue",
+      "source_url": "https://www.tsb.gc.ca/eng/rapports-reports/pipeline/2022/p22h0023/p22h0023.html",
+      "source_location": "Sections 1.6 and 2.1-2.2",
+      "allowed_event_types": [],
+      "reason": "Buried-pipe soil and cathodic-protection mechanisms do not establish a saddle wetness waveform or wall-loss estimate."
+    },
+    {
+      "case_id": "QC-06",
+      "record_type": "failure",
+      "title": "Minell buried gas pipeline immediate tractor strike",
+      "installation": "buried_gas_pipeline_analogue",
+      "source_url": "https://www.tsb.gc.ca/eng/rapports-reports/pipeline/2021/p21h0143/p21h0143.html",
+      "source_location": "Factual information and Table 1",
+      "allowed_event_types": [],
+      "reason": "The impact ruptured the pipe immediately; the report provides post-strike alarms, not a pre-failure saddle signal."
+    }
+  ]
+}

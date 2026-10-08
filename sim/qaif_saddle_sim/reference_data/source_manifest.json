@@ -1,0 +1,109 @@
+{
+  "schema_version": "1",
+  "entries": {
+    "red_sea_coast_winter_2024": {
+      "path": "red_sea_coast_winter_2024.json",
+      "url": "https://power.larc.nasa.gov/api/temporal/hourly/point?parameters=T2M%2CWS10M%2CALLSKY_SFC_SW_DWN%2CALLSKY_SFC_LW_DWN%2CPRECTOTCORR&community=RE&latitude=24.0&longitude=38.0&start=20240101&end=20240107&format=JSON&time-standard=UTC",
+      "sha256": "6f5d41e7b1d3e25cf3a5fa2685f7c9c82af9ab5fcd7b493d633ad7797267f63c",
+      "kind": "NASA POWER hourly gridded archive, UTC",
+      "latitude": 24.0,
+      "longitude": 38.0,
+      "start": "20240101",
+      "end": "20240107"
+    },
+    "red_sea_coast_summer_2024": {
+      "path": "red_sea_coast_summer_2024.json",
+      "url": "https://power.larc.nasa.gov/api/temporal/hourly/point?parameters=T2M%2CWS10M%2CALLSKY_SFC_SW_DWN%2CALLSKY_SFC_LW_DWN%2CPRECTOTCORR&community=RE&latitude=24.0&longitude=38.0&start=20240701&end=20240707&format=JSON&time-standard=UTC",
+      "sha256": "7b862df981ae4dee8bb60ee6403d68043ead95f1219a3bd58204a8e72ccd203b",
+      "kind": "NASA POWER hourly gridded archive, UTC",
+      "latitude": 24.0,
+      "longitude": 38.0,
+      "start": "20240701",
+      "end": "20240707"
+    },
+    "inland_desert_winter_2024": {
+      "path": "inland_desert_winter_2024.json",
+      "url": "https://power.larc.nasa.gov/api/temporal/hourly/point?parameters=T2M%2CWS10M%2CALLSKY_SFC_SW_DWN%2CALLSKY_SFC_LW_DWN%2CPRECTOTCORR&community=RE&latitude=22.0&longitude=54.0&start=20240101&end=20240107&format=JSON&time-standard=UTC",
+      "sha256": "136873a38053e6bdea6b9aad88a631975a1a5a6ed03f3fbd571c3b78c1db345c",
+      "kind": "NASA POWER hourly gridded archive, UTC",
+      "latitude": 22.0,
+      "longitude": 54.0,
+      "start": "20240101",
+      "end": "20240107"
+    },
+    "inland_desert_summer_2024": {
+      "path": "inland_desert_summer_2024.json",
+      "url": "https://power.larc.nasa.gov/api/temporal/hourly/point?parameters=T2M%2CWS10M%2CALLSKY_SFC_SW_DWN%2CALLSKY_SFC_LW_DWN%2CPRECTOTCORR&community=RE&latitude=22.0&longitude=54.0&start=20240701&end=20240707&format=JSON&time-standard=UTC",
+      "sha256": "7fa0b0e525d9a431d44ae4ec409f9d5663ae481cf9a5356c45234aba44f7146b",
+      "kind": "NASA POWER hourly gridded archive, UTC",
+      "latitude": 22.0,
+      "longitude": 54.0,
+      "start": "20240701",
+      "end": "20240707"
+    },
+    "trr_boundary": {
+      "path": "GasLib-134-sinus-InputData.bcd.gz",
+      "url": "https://raw.githubusercontent.com/TRR154/InstationaryGasNetworks/main/GasLib-134/GasLib-134-sinus-InputData.bcd.gz",
+      "sha256": "e7185b18228aa8518d4069a849ed1e4d8075d8d348446cbb7abee984151e2032",
+      "kind": "TRR154 benchmark, Apache-2.0; not field measurements"
+    },
+    "trr_initial": {
+      "path": "GasLib-134-sinus_5000_60-initial.state.gz",
+      "url": "https://raw.githubusercontent.com/TRR154/InstationaryGasNetworks/main/GasLib-134/GasLib-134-sinus_5000_60-initial.state.gz",
+      "sha256": "2baef5f02f34676445bbbf8f6c880bc03b7b9af5414a2bbd8d126e08e32b5444",
+      "kind": "TRR154 benchmark, Apache-2.0; not field measurements"
+    },
+    "gaslib_network": {
+      "path": "GasLib-134-v2-20211129.net",
+      "url": "https://gaslib.zib.de/download/data/GasLib-134-v2-20211129.net",
+      "sha256": "29c629e5d4588b8575fe242f8722ea815b39ecf30245f9f32553f6d0e59e2cb5",
+      "kind": "GasLib-134-v2 network, CC BY 3.0; Greek benchmark",
+      "tls_verification_disabled_for_download": true
+    },
+    "red_sea_coast_rain_2024": {
+      "path": "red_sea_coast_rain_2024.json",
+      "url": "https://power.larc.nasa.gov/api/temporal/hourly/point?parameters=T2M%2CWS10M%2CALLSKY_SFC_SW_DWN%2CALLSKY_SFC_LW_DWN%2CPRECTOTCORR&community=RE&latitude=24.0&longitude=38.0&start=20240326&end=20240401&format=JSON&time-standard=UTC",
+      "sha256": "d764f29844b9116da89405620390d22c4de7d3bd12c3e0c6678f1f101e616255",
+      "kind": "NASA POWER hourly gridded archive, UTC",
+      "latitude": 24.0,
+      "longitude": 38.0,
+      "start": "20240326",
+      "end": "20240401"
+    },
+    "inland_desert_rain_2024": {
+      "path": "inland_desert_rain_2024.json",
+      "url": "https://power.larc.nasa.gov/api/temporal/hourly/point?parameters=T2M%2CWS10M%2CALLSKY_SFC_SW_DWN%2CALLSKY_SFC_LW_DWN%2CPRECTOTCORR&community=RE&latitude=22.0&longitude=54.0&start=20240413&end=20240419&format=JSON&time-standard=UTC",
+      "sha256": "da8692e80feb2d578e570e559f9690c1472dbd2f20096408848a8cc5afe86c5a",
+      "kind": "NASA POWER hourly gridded archive, UTC",
+      "latitude": 22.0,
+      "longitude": 54.0,
+      "start": "20240413",
+      "end": "20240419"
+    },
+    "red_sea_coast_year_2024": {
+      "path": "red_sea_coast_year_2024.json",
+      "url": "https://power.larc.nasa.gov/api/temporal/hourly/point?parameters=T2M%2CWS10M%2CALLSKY_SFC_SW_DWN%2CALLSKY_SFC_LW_DWN%2CPRECTOTCORR&community=RE&latitude=24.0&longitude=38.0&start=20240101&end=20241231&format=JSON&time-standard=UTC",
+      "sha256": "c8607a9a0fe90ead790bd257eb16bf8d5197ba05e17502139d3d4e743f7129e8",
+      "kind": "NASA POWER hourly gridded archive, UTC",
+      "latitude": 24.0,
+      "longitude": 38.0,
+      "start": "20240101",
+      "end": "20241231"
+    },
+    "inland_desert_year_2024": {
+      "path": "inland_desert_year_2024.json",
+      "url": "https://power.larc.nasa.gov/api/temporal/hourly/point?parameters=T2M%2CWS10M%2CALLSKY_SFC_SW_DWN%2CALLSKY_SFC_LW_DWN%2CPRECTOTCORR&community=RE&latitude=22.0&longitude=54.0&start=20240101&end=20241231&format=JSON&time-standard=UTC",
+      "sha256": "c42a1214cdeb443bc80be7bc58c225cc1d4007a08433e6457319016690e93e7d",
+      "kind": "NASA POWER hourly gridded archive, UTC",
+      "latitude": 22.0,
+      "longitude": 54.0,
+      "start": "20240101",
+      "end": "20241231"
+    }
+  },
+  "source_notes": [
+    "POWER coordinates identify archive grid data, not pipe-side station measurements.",
+    "TRR154 transient data are benchmark boundary conditions and an initial state.",
+    "GasLib-134 is a Greek network benchmark, not a Saudi pipeline."
+  ]
+}

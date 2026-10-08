@@ -1,0 +1,23 @@
+# Free demonstration: SQLite changes reset when the service restarts/redeploys.
+# For persistent records, use deploy/render-persistent.yaml after choosing a paid plan.
+services:
+  - type: web
+    name: qaif-demo
+    runtime: docker
+    plan: free
+    dockerfilePath: ./deploy/Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    envVars:
+      - key: QAIF_ADMIN_PASSWORD
+        sync: false
+      - key: QAIF_PUBLIC_DEPLOYMENT
+        value: "true"
+      - key: QAIF_DEMO_MODE
+        value: "true"
+      - key: QAIF_SECURE_COOKIE
+        value: "true"
+      - key: QAIF_DATA_DIR
+        value: /data
+      - key: FORWARDED_ALLOW_IPS
+        value: "*"

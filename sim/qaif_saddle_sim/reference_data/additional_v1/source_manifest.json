@@ -1,0 +1,61 @@
+{
+  "schema_version": "1",
+  "source_group_id": "ntsb_san_bruno_DCA10MP008",
+  "source_pdf": "san_bruno_pressure_history.pdf",
+  "source_pdf_sha256": "accd097454d47d26460c5ce0652978d39f68112defe22dff4da43798ccdbdb77",
+  "pressure_csv": "san_bruno_pressure.csv",
+  "pressure_csv_sha256": "3fdd31a170415724e2398dc54b07b2338c234913b65d9110992fe02a1f6307e7",
+  "source_pdf_page_count": 1029,
+  "source_url": "https://data.ntsb.gov/Docket/Document/docBLOB?FileExtension=.PDF&FileName=Historical+Line+132+SCADA+pressure+readings+from+2002+to+Dec+31+2010-Master.PDF&ID=40352438",
+  "channel_id": "NMA_PT0030",
+  "channel_name": "MRTIN-STA L132 U/S PRESS",
+  "native_unit": "unspecified in printed historical table; native ratio only",
+  "source_timezone": "unspecified; source-local clock",
+  "source_week_start_local": "2002-01-01 00:00",
+  "source_week_end_local_exclusive": "2002-01-08 00:00",
+  "holdout_start_local_inclusive": "2010-09-09 00:00",
+  "source_row_count": 168,
+  "source_pages": [
+    3,
+    4,
+    5
+  ],
+  "certified_healthy_operation": false,
+  "training_ready": false,
+  "entries": {
+    "GasLibE-39-v1.zip": {
+      "url": "https://zenodo.org/records/22141135/files/GasLibE-39-v1.zip?download=1",
+      "resolved_url": "https://zenodo.org/records/22141135/files/GasLibE-39-v1.zip?download=1",
+      "sha256": "af566f4a9a3557dd1d2581e369de548fc030e6543b2402060fa9f5912ff39a45",
+      "bytes": 17202,
+      "tls_certificate_validation": true,
+      "path": "GasLibE-39-v1.zip"
+    },
+    "san_bruno_pressure_history.pdf": {
+      "url": "https://data.ntsb.gov/Docket/Document/docBLOB?FileExtension=.PDF&FileName=Historical+Line+132+SCADA+pressure+readings+from+2002+to+Dec+31+2010-Master.PDF&ID=40352438",
+      "resolved_url": "https://data.ntsb.gov/Docket/Document/docBLOB?FileExtension=.PDF&FileName=Historical+Line+132+SCADA+pressure+readings+from+2002+to+Dec+31+2010-Master.PDF&ID=40352438",
+      "sha256": "accd097454d47d26460c5ce0652978d39f68112defe22dff4da43798ccdbdb77",
+      "bytes": 3352847,
+      "tls_certificate_validation": true,
+      "path": "san_bruno_pressure_history.pdf"
+    },
+    "mit_pressure_vessels.pdf": {
+      "url": "https://web.mit.edu/course/3/3.11/www/modules/pv.pdf",
+      "resolved_url": "https://web.mit.edu/course/3/3.11/www/modules/pv.pdf",
+      "sha256": "5bfeaffe467d40874106b99619df2a17ddb7c8dbd5fbea1861f95657c1c64f61",
+      "bytes": 195961,
+      "tls_certificate_validation": true,
+      "path": "mit_pressure_vessels.pdf"
+    },
+    "GasLibE-39.net": {
+      "path": "GasLibE-39.net",
+      "sha256": "bba9b24c363b6ffbaedf7f25420ef04d3965d851478591e0df41d827bc01c607",
+      "parent_zip_sha256": "af566f4a9a3557dd1d2581e369de548fc030e6543b2402060fa9f5912ff39a45",
+      "archive_member": "GasLibE-39-v1-20260831.net",
+      "url": "https://zenodo.org/records/22141135",
+      "kind": "artificial stationary benchmark, not measured operation",
+      "citation": "F. Hennings, Modeling and solving real-world transient gas network transport problems using mathematical programming, TU Berlin, 2023",
+      "citation_url": "https://doi.org/10.14279/depositonce-18303"
+    }
+  }
+}

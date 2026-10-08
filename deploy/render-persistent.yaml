@@ -1,0 +1,26 @@
+# Optional paid deployment. Select the plan in Render before creating the service.
+services:
+  - type: web
+    name: qaif
+    runtime: docker
+    plan: starter
+    dockerfilePath: ./deploy/Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    disk:
+      name: qaif-data
+      mountPath: /data
+      sizeGB: 1
+    envVars:
+      - key: QAIF_ADMIN_PASSWORD
+        sync: false
+      - key: QAIF_PUBLIC_DEPLOYMENT
+        value: "true"
+      - key: QAIF_DEMO_MODE
+        value: "true"
+      - key: QAIF_SECURE_COOKIE
+        value: "true"
+      - key: QAIF_DATA_DIR
+        value: /data
+      - key: FORWARDED_ALLOW_IPS
+        value: "*"

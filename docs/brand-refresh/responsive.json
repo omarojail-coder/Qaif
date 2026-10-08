@@ -1,0 +1,44 @@
+[
+  {
+    "route": "map",
+    "heading": "الخريطة",
+    "scroll": 345,
+    "width": 345
+  },
+  {
+    "route": "saddle",
+    "heading": "تفاصيل السرج",
+    "scroll": 345,
+    "width": 345
+  },
+  {
+    "route": "drone",
+    "heading": "جولات الدرون",
+    "scroll": 345,
+    "width": 345
+  },
+  {
+    "route": "inspection",
+    "heading": "مهام الفحص",
+    "scroll": 345,
+    "width": 345
+  },
+  {
+    "route": "sources",
+    "heading": "التقارير والسجل",
+    "scroll": 345,
+    "width": 345
+  },
+  {
+    "route": "demo",
+    "heading": "المحاكي",
+    "scroll": 345,
+    "width": 345
+  },
+  {
+    "route": "settings",
+    "heading": "الإعدادات",
+    "scroll": 345,
+    "width": 345
+  }
+]

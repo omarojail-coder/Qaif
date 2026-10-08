@@ -1,0 +1,11 @@
+{
+  "compressibility_factor": 0.9,
+  "heat_capacity_j_kgk": 2300.0,
+  "viscosity_pa_s": 1.1e-05,
+  "thermal_conductivity_w_mk": 0.032,
+  "wind_height_factor": 0.6,
+  "solar_incidence_factor": 0.6,
+  "wet_drive_mm_h_at_one": 5.0,
+  "external_pressure_pa": 101325.0,
+  "effective_axial_exposure_length_m": 1000.0
+}

@@ -1,0 +1,124 @@
+{
+  "version": "qaif_saddle_provisional_416_v22",
+  "status": "prepared_pending_other_head_regression_check",
+  "feature_columns": {
+    "mechanical_anomaly": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      40,
+      41
+    ],
+    "thermal_anomaly": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      40,
+      41
+    ],
+    "wetness_anomaly": [
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31
+    ],
+    "h2s_anomaly": [
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39
+    ]
+  },
+  "model_files_sha256": {
+    "mechanical_anomaly.json": "7fc5942f1c840c1e8d3319cc8d1d8fc4bea7740914ca0bc0105f16ff2562762e",
+    "thermal_anomaly.json": "5c4485c811a0cae1155bb58200eb8c1992315a7c2b655fb9e2767c6297748a71",
+    "wetness_anomaly.json": "8df24a2aa2043008e48adc050e3725f3bf7c8df212811800d6e15d526595d9d8",
+    "h2s_anomaly.json": "418dc1492f719be4380ee98592b4fbf1ad884605ed1fb0ba3706b913c0a70831"
+  },
+  "head_sources": {
+    "mechanical_anomaly": {
+      "path": "saddle_mechanical_thermal_data_xgb_v21/models/mechanical_fixed_settings_416.json",
+      "sha256": "7fc5942f1c840c1e8d3319cc8d1d8fc4bea7740914ca0bc0105f16ff2562762e"
+    },
+    "thermal_anomaly": {
+      "path": "saddle_joint_gru_v6/models/expanded_thermal_xgboost.json",
+      "sha256": "5c4485c811a0cae1155bb58200eb8c1992315a7c2b655fb9e2767c6297748a71"
+    },
+    "wetness_anomaly": {
+      "path": "saddle_ai_xgboost_v1/models/wetness_anomaly.json",
+      "sha256": "8df24a2aa2043008e48adc050e3725f3bf7c8df212811800d6e15d526595d9d8"
+    },
+    "h2s_anomaly": {
+      "path": "saddle_ai_xgboost_v1/models/h2s_anomaly.json",
+      "sha256": "418dc1492f719be4380ee98592b4fbf1ad884605ed1fb0ba3706b913c0a70831"
+    }
+  },
+  "mechanical_training_cases": 416,
+  "thermal_reference": "frozen expanded thermal XGBoost v6 used throughout mechanical comparisons",
+  "prediction_threshold": 0.5,
+  "alarm_persistence_samples": 3,
+  "baseline_samples": 24,
+  "feature_source_sha256": "ac8d1996088cd88fa5c244121ea35f2e017d4c5763572342406411c77941f433",
+  "native_dll_sha256": "883b877f45ca27ce9e04c97a0f95c806e72baf0e2effd5d4f43adf633d5c8b0b",
+  "other_heads_retrained": false,
+  "field_validated": false,
+  "supported_target_contract": "saddle_joint_target_review_v1/target_contract_approved.json",
+  "mechanical_target": "Delivered qualitative crack-attributable response for the pinned geometry; not all stress or damage types",
+  "score_is_calibrated_probability": false,
+  "known_mechanical_tradeoffs": {
+    "general_recall_decreased": true,
+    "some_confirmations_delayed": true,
+    "full_retention_gate_passed": false,
+    "source_results": "saddle_mechanical_thermal_data_xgb_v21/selection_manifest.json"
+  }
+}

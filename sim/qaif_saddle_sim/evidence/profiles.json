@@ -1,0 +1,65 @@
+{
+  "schema_version": "1",
+  "asset": {
+    "asset_id": "gaslib134_p_br52_surrogate",
+    "installation": "aboveground",
+    "fluid": "reference gas",
+    "benchmark_pipe_id": "p_br52",
+    "geometry_source_key": "gaslib_network",
+    "geometry_source_sha256": "29c629e5d4588b8575fe242f8722ea815b39ecf30245f9f32553f6d0e59e2cb5",
+    "inner_diameter_m": 0.508,
+    "wall_thickness_m": 0.015,
+    "coating_thickness_m": 0.003,
+    "steel_grade": null,
+    "coating_material": null,
+    "adhesive_material": null,
+    "support_layout": null,
+    "stress_budget_pa": 200000000.0,
+    "stress_budget_basis": "research guard, not measured yield strength or allowable design stress",
+    "unknowns": [
+      "pipe steel grade/yield",
+      "coating/adhesive transfer",
+      "support distances and stiffness",
+      "physical saddle dimensions"
+    ],
+    "training_ready": false
+  },
+  "sites": [
+    {
+      "site_id": "red_sea_coast_grid_reference",
+      "latitude": 24,
+      "longitude": 38,
+      "installation": "aboveground",
+      "actual_pipeline_site": false,
+      "source_type": "NASA POWER UTC grid archive",
+      "annual_weather_source_key": "red_sea_coast_year_2024",
+      "episode_source_keys": [
+        "red_sea_coast_summer_2024",
+        "red_sea_coast_winter_2024",
+        "red_sea_coast_rain_2024"
+      ],
+      "fault_incidence_prior": null,
+      "chloride_exposure": null,
+      "maintenance_history": null,
+      "limit": "Weather coordinate, not a measured pipe route or a local failure-rate assumption."
+    },
+    {
+      "site_id": "inland_desert_grid_reference",
+      "latitude": 22,
+      "longitude": 54,
+      "installation": "aboveground",
+      "actual_pipeline_site": false,
+      "source_type": "NASA POWER UTC grid archive",
+      "annual_weather_source_key": "inland_desert_year_2024",
+      "episode_source_keys": [
+        "inland_desert_summer_2024",
+        "inland_desert_winter_2024",
+        "inland_desert_rain_2024"
+      ],
+      "fault_incidence_prior": null,
+      "chloride_exposure": null,
+      "maintenance_history": null,
+      "limit": "Weather coordinate, not a measured pipe route or a local failure-rate assumption."
+    }
+  ]
+}

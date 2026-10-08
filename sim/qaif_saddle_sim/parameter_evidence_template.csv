@@ -1,0 +1,25 @@
+name,unit,reference_value,range,source_url,source_setup,Qaif_transfer_status
+inner_diameter_m,m,,,,,unknown
+wall_thickness_m,m,,,,,unknown
+coating_thickness_m,m,,,,,unknown
+active_length_m,m,,,,,design_sweep
+thermal_sector_angle_rad,rad,,,,,design_sweep
+young_modulus_pa,Pa,,,,,unknown
+poisson_ratio,1,,,,,unknown
+expansion_per_k,1/K,,,,,unknown
+steel_density_kg_m3,kg/m3,,,,,unknown
+steel_heat_capacity_j_kgk,J/(kg K),,,,,unknown
+steel_conductivity_w_mk,W/(m K),,,,,unknown
+coating_density_kg_m3,kg/m3,,,,,unknown
+coating_heat_capacity_j_kgk,J/(kg K),,,,,unknown
+coating_conductivity_w_mk,W/(m K),,,,,unknown
+solar_absorptivity,1,,,,,unknown
+emissivity,1,,,,,unknown
+h_inner_w_m2k,W/(m2 K),,,,,unknown
+h_outer_w_m2k,W/(m2 K),,,,,unknown
+strain_transfer_gain,1,,,,,unknown
+strain_lag_s,s,,,,,unknown
+temperature_lag_s,s,,,,,unknown
+wet_ingress_rate_per_s,1/s,,,,,unknown
+wet_drying_rate_per_s,1/s,,,,,unknown
+sensor_noise_std,channel_unit,,,,,unknown

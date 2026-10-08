@@ -1,0 +1,32 @@
+{
+  "schema_version": "1",
+  "asset_id": "gaslib134_p_br52_surrogate",
+  "site_id": "POWER_24N_38E",
+  "base_episode_id": "red_sea_coast_rain_2024",
+  "scenario_family_id": "reference_rain_with_assumed_local_path",
+  "mechanism_id": "interface_wetting",
+  "evidence_level": "archived_weather_plus_assumed_interface_path",
+  "unknown_assumptions": [
+    "The timing and existence of an open water path are scenario assumptions, not observations.",
+    "Wetness-transfer parameters and sensor noise are uncalibrated.",
+    "POWER rain is grid-scale precipitation, not verified wetting at a pipe surface."
+  ],
+  "phases": [
+    {
+      "phase_id": "open_local_water_path_during_archived_rain",
+      "event_type": "interface_wetting",
+      "start_s": 248400,
+      "end_s": 363600,
+      "changes": {
+        "wet_path_open": {"mode": "hold", "value": true}
+      }
+    },
+    {
+      "phase_id": "observe_drying_after_path_closes",
+      "event_type": "normal_environment",
+      "start_s": 363600,
+      "end_s": 522000,
+      "changes": {}
+    }
+  ]
+}

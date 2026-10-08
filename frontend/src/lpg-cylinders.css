@@ -1,0 +1,167 @@
+.cylinder-page { display: grid; gap: 20px; min-width: 0; color: var(--text); }
+.cylinder-page .panel { margin: 0; min-width: 0; }
+.cylinder-page h2, .cylinder-page h3, .cylinder-page h4 { margin: 0; color: var(--accent-dark); }
+.cylinder-page button { min-height: 36px; }
+.cylinder-passport { display: grid; grid-template-columns: minmax(0, 1fr) 180px; gap: 20px 32px; padding: 24px; }
+.cylinder-passport-copy { min-width: 0; }
+.cylinder-title-row, .cylinder-section-heading { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+.cylinder-id-caption { display: flex; align-items: center; gap: 7px; margin: 0 0 6px; font-size: 12px; color: var(--muted); }
+.cylinder-title-row h2 { font-size: 28px; font-weight: 600; text-align: right; }
+.cylinder-state { display: inline-flex; align-items: center; gap: 6px; padding: 7px 10px; border-radius: 5px; font-size: 12px; flex-shrink: 0; }
+.cylinder-state.review { color: #94364e; background: #fceef2; }
+.cylinder-state.clear { color: #316b57; background: #edf5f0; }
+.cylinder-state.unknown { color: #65627a; background: #f0eff5; }
+.cylinder-state-explanation { margin: 12px 0 20px; color: var(--muted); font-size: 12px; line-height: 1.8; max-width: 75ch; }
+.cylinder-identity-details, .cylinder-trip-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 24px; margin: 0; }
+.cylinder-page dt { color: var(--muted); font-size: 11px; margin-bottom: 4px; }
+.cylinder-page dd { margin: 0; font-size: 13px; color: var(--accent-dark); text-align: right; }
+.cylinder-passport-actions { display: flex; gap: 10px; align-items: center; margin-top: 22px; flex-wrap: wrap; }
+.cylinder-passport-actions > span { font-size: 10px; color: var(--muted); }
+.cylinder-passport-actions button { font-size: 12px; }
+.cylinder-passport-actions .cylinder-refresh { padding: 6px; }
+.cylinder-portrait { display: flex; align-items: center; justify-content: center; flex-direction: column; margin: 0; position: relative; border-radius: 10px; background: #fff6ef; min-height: 245px; }
+.cylinder-portrait .shipment-cylinder-shape { width: 130px; height: 188px; }
+.cylinder-portrait figcaption { position: absolute; top: 120px; background: #fff9f4; color: #783b1b; border: 1px solid #d6996e; border-radius: 3px; font-size: 11px; padding: 3px 6px; font-weight: 600; }
+.cylinder-portrait > span { font-size: 10px; color: #864725; margin-top: 7px; }
+.cylinder-history-summary { grid-column: 1 / -1; display: flex; gap: 28px; border-top: 1px solid var(--line); margin: 0; padding-top: 16px; justify-content: space-between; flex-wrap: wrap; }
+.cylinder-history-summary dd { font-size: 17px; font-weight: 500; }
+.cylinder-workspace { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 20px; align-items: start; }
+.cylinder-detail-column { display: grid; gap: 20px; min-width: 0; }
+.cylinder-section-heading { margin-bottom: 18px; }
+.cylinder-section-heading h3 { display: flex; gap: 8px; align-items: center; font-size: 15px; }
+.cylinder-section-heading > span { font-size: 11px; color: var(--muted); }
+.cylinder-journeys { padding: 20px; }
+.cylinder-journeys ol { list-style: none; margin: 0; padding: 0; }
+.cylinder-journey-row { width: 100%; display: grid; grid-template-columns: 8px 94px minmax(0, 1fr) 155px 16px; gap: 12px; align-items: center; background: transparent; border: 1px solid transparent; border-top-color: var(--line); border-radius: 0; padding: 13px 9px; text-align: right; }
+.cylinder-journey-row.selected { background: #f4f3fe; border-color: #c3bfeb; border-radius: 6px; }
+.cylinder-journey-row:hover { background: #f8f7fd; }
+.cylinder-journey-dot { height: 7px; width: 7px; background: #6b806f; border-radius: 50%; }
+.cylinder-journey-dot.review { background: #b3475f; }
+.cylinder-journey-dot.unknown { background: #868296; }
+.cylinder-journey-date, .cylinder-journey-route, .cylinder-journey-cage { display: flex; flex-direction: column; gap: 3px; min-width: 0; font-size: 12px; }
+.cylinder-journey-row small { color: var(--muted); font-size: 10px; line-height: 1.65; }
+.cylinder-journey-route strong { display: flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 500; flex-wrap: wrap; }
+.cylinder-journey-cage b { text-align: right; font-weight: 500; }
+.cylinder-trip-detail { padding: 24px; }
+.cylinder-selected-route { display: flex; align-items: center; gap: 20px; border-bottom: 1px solid var(--line); padding-bottom: 20px; margin-bottom: 20px; }
+.cylinder-selected-route > div { display: flex; gap: 10px; align-items: center; flex: 1; min-width: 0; }
+.cylinder-selected-route span { display: flex; flex-direction: column; gap: 4px; }
+.cylinder-selected-route small, .cylinder-selected-route em { color: var(--muted); font-size: 11px; font-style: normal; }
+.cylinder-selected-route strong { font-size: 14px; font-weight: 500; }
+.cylinder-trip-facts { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-bottom: 26px; }
+.cylinder-trip-facts dd { font-size: 12px; line-height: 1.8; }
+.cylinder-evidence-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+.cylinder-evidence-heading h4 { font-size: 14px; }
+.cylinder-evidence-heading > span { font-size: 11px; color: var(--muted); }
+.cylinder-shared-note { margin: 7px 0 16px; font-size: 11px; color: var(--muted); line-height: 1.8; }
+.cylinder-peak-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px 20px; padding: 20px 0; border-block: 1px solid var(--line); margin: 0; }
+.cylinder-peak-grid dd { font-size: 22px; font-weight: 500; }
+.cylinder-peak-grid dd small { font-size: 11px; font-weight: 400; color: var(--muted); }
+.cylinder-peak-grid > div > span { color: var(--muted); font-size: 10px; }
+.cylinder-leak-indicator { display: flex; align-items: center; gap: 10px; margin: 20px 0; padding: 15px; background: #fff6ef; border-radius: 6px; color: #9a4d1b; }
+.cylinder-leak-indicator > div { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 0; }
+.cylinder-leak-indicator strong { font-size: 13px; font-weight: 500; }
+.cylinder-leak-indicator div span { font-size: 11px; line-height: 1.7; }
+.cylinder-leak-indicator > span { flex-direction: column; gap: 1px; }
+.cylinder-leak-indicator > span b { font-size: 18px; font-weight: 500; }
+.cylinder-leak-indicator > span small { font-size: 9px; }
+.cylinder-notes h4 { display: flex; align-items: center; gap: 7px; font-size: 14px; }
+.cylinder-notes ul { padding: 0 20px 0 0; margin: 10px 0 18px; font-size: 12px; line-height: 1.95; }
+.cylinder-notes li { padding-right: 3px; margin-bottom: 6px; }
+.cylinder-inspection { background: #f6f6fa; padding: 13px 16px; border-radius: 5px; font-size: 11px; color: var(--muted); line-height: 1.8; display: flex; flex-direction: column; gap: 5px; }
+.cylinder-inspection strong { color: var(--text); font-weight: 500; }
+.cylinder-technical { border-top: 1px solid var(--line); margin-top: 20px; padding-top: 18px; }
+.cylinder-technical summary, .cylinder-provenance summary { display: flex; align-items: center; gap: 7px; cursor: pointer; color: var(--accent-dark); font-size: 12px; }
+.cylinder-technical summary::after, .cylinder-provenance summary::after { content: '+'; margin-right: auto; font-size: 17px; }
+.cylinder-technical[open] summary::after, .cylinder-provenance[open] summary::after { content: '−'; }
+.cylinder-chart-tabs { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 18px; }
+.cylinder-chart-tabs button { padding: 4px 10px; min-height: 31px; font-size: 11px; border-color: transparent; background: #f7f7fb; }
+.cylinder-chart-tabs .active { color: var(--accent-dark); border-color: #c3bfeb; background: #f0effb; }
+.cylinder-table-wrap { width: 100%; overflow-x: auto; }
+.cylinder-signal-table { border-collapse: collapse; width: 100%; text-align: right; font-size: 12px; }
+.cylinder-signal-table caption { text-align: right; font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+.cylinder-signal-table th, .cylinder-signal-table td { padding: 10px 7px; border-bottom: 1px solid var(--line); font-weight: 400; }
+.cylinder-signal-table thead th { font-size: 11px; color: var(--muted); }
+.cylinder-alert-list { list-style: none; margin: 15px 0; padding: 0; display: grid; gap: 10px; }
+.cylinder-alert-list li { display: flex; align-items: center; gap: 10px; font-size: 11px; color: #94364e; }
+.cylinder-alert-list li span { flex: 1; }
+.cylinder-technical-note { font-size: 10px; color: var(--muted); line-height: 1.9; margin-bottom: 0; }
+.cylinder-registry { padding: 18px; position: sticky; top: 90px; }
+.cylinder-search { display: flex; gap: 7px; align-items: center; border: 1px solid var(--line); border-radius: 5px; padding: 8px; color: var(--muted); }
+.cylinder-search input { min-width: 0; width: 100%; border: 0; padding: 0; background: transparent; font-size: 12px; color: var(--text); outline: 0; }
+.cylinder-search:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+.cylinder-search input::placeholder { color: var(--muted); }
+.cylinder-filter { display: flex; flex-direction: column; gap: 6px; margin-top: 14px; font-size: 11px; color: var(--muted); }
+.cylinder-filter select { width: 100%; font-size: 12px; }
+.cylinder-result-count { font-size: 10px; color: var(--muted); margin: 14px 0 8px; }
+.cylinder-registry-list { max-height: 440px; overflow-y: auto; }
+.cylinder-registry-list > button { display: flex; width: 100%; gap: 9px; align-items: center; padding: 8px 6px; border: 1px solid transparent; border-top-color: var(--line); border-radius: 0; text-align: right; background: white; }
+.cylinder-registry-list .selected { background: #f3f2fd; border-color: #c3bfeb; border-radius: 5px; }
+.cylinder-registry-list > button:hover { background: #f8f7fd; }
+.cylinder-registry-list .shipment-cylinder-shape { width: 25px; height: 37px; flex-shrink: 0; }
+.cylinder-registry-list button > span { display: flex; flex: 1; flex-direction: column; gap: 4px; min-width: 0; }
+.cylinder-registry-list strong { font-weight: 500; font-size: 12px; text-align: right; }
+.cylinder-registry-list small { color: var(--muted); font-size: 10px; }
+.cylinder-pagination { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; }
+.cylinder-pagination span { font-size: 11px; color: var(--muted); }
+.cylinder-pagination button { padding: 5px; min-height: 30px; }
+.cylinder-empty { font-size: 12px; padding: 15px 0; }
+.cylinder-empty button { font-size: 11px; }
+.cylinder-provenance { padding: 14px 18px; border: 1px solid var(--line); border-radius: 6px; }
+.cylinder-provenance p { font-size: 11px; color: var(--muted); line-height: 1.95; max-width: 100ch; }
+.cylinder-error { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.cylinder-loading { color: var(--muted); font-size: 13px; }
+@media (max-width: 1200px) {
+  .cylinder-workspace { grid-template-columns: minmax(0, 1fr) 250px; }
+  .cylinder-journey-row { grid-template-columns: 7px 82px minmax(0, 1fr) 16px; gap: 9px; }
+  .cylinder-journey-cage { grid-column: 3; flex-direction: row; gap: 10px; }
+  .cylinder-journey-row > svg { grid-column: 4; grid-row: 1; }
+}
+@media (max-width: 1000px) {
+  .cylinder-workspace { display: flex; flex-direction: column; }
+  .cylinder-registry { order: -1; position: static; width: 100%; }
+  .cylinder-registry-list { max-height: 230px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cylinder-registry .cylinder-section-heading { margin-bottom: 12px; }
+  .cylinder-detail-column { width: 100%; }
+  .cylinder-trip-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .cylinder-page { gap: 14px; }
+  .cylinder-passport { grid-template-columns: minmax(0, 1fr) 98px; padding: 16px; gap: 15px; }
+  .cylinder-portrait { min-height: 172px; align-self: start; }
+  .cylinder-portrait .shipment-cylinder-shape { width: 87px; height: 132px; }
+  .cylinder-portrait figcaption { top: 80px; font-size: 7px; padding: 2px 3px; }
+  .cylinder-portrait > span { font-size: 8px; }
+  .cylinder-title-row { align-items: flex-start; flex-direction: column; gap: 10px; }
+  .cylinder-title-row h2 { font-size: 20px; }
+  .cylinder-state { font-size: 10px; padding: 6px 7px; flex-shrink: 1; }
+  .cylinder-id-caption { font-size: 10px; }
+  .cylinder-state-explanation { font-size: 11px; }
+  .cylinder-identity-details { grid-template-columns: 1fr; gap: 11px; }
+  .cylinder-page dt { font-size: 10px; }
+  .cylinder-page dd { font-size: 12px; }
+  .cylinder-history-summary { gap: 15px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cylinder-history-summary dd { font-size: 15px; }
+  .cylinder-registry, .cylinder-journeys, .cylinder-trip-detail { padding: 16px; }
+  .cylinder-registry-list { grid-template-columns: 1fr; max-height: 188px; }
+  .cylinder-section-heading { align-items: start; gap: 10px; }
+  .cylinder-section-heading h3 { font-size: 14px; }
+  .cylinder-section-heading > span { font-size: 10px; }
+  .cylinder-journey-row { grid-template-columns: 6px minmax(0, 1fr) 16px; padding: 12px 5px; gap: 7px; }
+  .cylinder-journey-date { flex-direction: row; align-items: center; gap: 8px; grid-column: 2; }
+  .cylinder-journey-route { grid-column: 2; }
+  .cylinder-journey-cage { grid-column: 2; }
+  .cylinder-journey-row > svg { grid-column: 3; }
+  .cylinder-journey-route strong { font-size: 11px; }
+  .cylinder-selected-route { gap: 10px; }
+  .cylinder-selected-route strong { font-size: 12px; }
+  .cylinder-selected-route > div { gap: 6px; }
+  .cylinder-selected-route svg { flex-shrink: 0; width: 15px; }
+  .cylinder-peak-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .cylinder-peak-grid dd { font-size: 20px; }
+  .cylinder-leak-indicator { padding: 12px; gap: 7px; }
+  .cylinder-leak-indicator > svg { flex-shrink: 0; width: 17px; }
+  .cylinder-leak-indicator strong { font-size: 12px; }
+  .cylinder-signal-table { font-size: 10px; }
+}
+@media (prefers-reduced-motion: reduce) { .cylinder-page * { transition: none !important; animation: none !important; } }

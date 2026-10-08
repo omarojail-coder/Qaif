@@ -1,0 +1,16 @@
+* text=auto eol=lf
+*.dll binary
+*.ttf binary
+*.woff2 binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.pdf binary
+*.zip binary
+
+# Preserve SHA-256 verified model, simulator, and fixture files byte for byte.
+backend/qaif_saddle_bundle/** -text
+sim/** -text
+fixtures/** -text
+sim_snapshot_sha256.json -text

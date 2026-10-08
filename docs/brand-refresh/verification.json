@@ -1,0 +1,17 @@
+{
+  "backend_tests_passed": 17,
+  "planning_math_passed": true,
+  "frozen_simulator_files_unchanged": 87,
+  "operational_data_unchanged": true,
+  "contrast_ratios": {
+    "body": 12.95,
+    "muted": 5.54,
+    "primary": 5.66,
+    "navigation": 12.2,
+    "placeholder": 5.42,
+    "attention": 5.05
+  },
+  "pipeline_catalog_coverage": "documented_subset",
+  "camera_tested": false,
+  "gemini_live_tested": false
+}

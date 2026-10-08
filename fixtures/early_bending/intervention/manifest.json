@@ -1,0 +1,33 @@
+{
+  "schema_version": "2",
+  "generator_version": "0.4.0",
+  "asset_id": "gaslib134_p_br52_surrogate",
+  "run_id": "red_sea_coast_rain_2024_2024032800_72h_ntsb1067220_20250913T1500_642dba33d193_intervention",
+  "source_episode_id": "red_sea_coast_rain_2024_2024032800_72h_ntsb1067220_20250913T1500_642dba33d193",
+  "parameter_basis": "research_sweep",
+  "seed": 42,
+  "sample_count": 433,
+  "config_sha256": "5ec752e174e25cabfa750be532b50597b93bdb1877f6330fc0cd85ed7153506e",
+  "forcing_sha256": "0cf8d1dacdd144988cd6d97e866873ad55aa90b8be8256b4d52081ef063a6622",
+  "reference_manifest_sha256": null,
+  "observable_context": [
+    "pressure_pa",
+    "fluid_temperature_k",
+    "ambient_temperature_k",
+    "solar_w_m2"
+  ],
+  "training_ready": false,
+  "output_files": {
+    "observed.csv": "cd665a643bcc2f33f0a8eec9dc12f9e71f6ae4890df97bbd6471ec88cb1e6e9a",
+    "context.csv": "3e375dd8e4d72ca912003640efdad0c556558e5aedeff6a031ac5891b64d9692",
+    "latent.csv": "33c0f95656dc022f1009da5826c76d10e71bf130ec499a6cf80dbf9bb699ff20",
+    "config_snapshot.json": "5ec752e174e25cabfa750be532b50597b93bdb1877f6330fc0cd85ed7153506e",
+    "forcing_snapshot.csv": "0cf8d1dacdd144988cd6d97e866873ad55aa90b8be8256b4d52081ef063a6622"
+  },
+  "limits": [
+    "No measured saddle transfer function or calibration",
+    "No inferred detection radius, leak, crack, wall-loss or scratch class",
+    "Forcing event_type and latent.csv are excluded from model features",
+    "Asset and run identifiers are kept in manifests, not observed/context columns"
+  ]
+}

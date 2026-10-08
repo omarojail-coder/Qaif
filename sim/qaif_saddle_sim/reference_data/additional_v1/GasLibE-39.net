@@ -1,0 +1,591 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!--                                                                                   -->
+<!--   This file is part of the project MODAL-EnergyLab in the Research Campus MODAL   -->
+<!--                      funded by the BMBF (05M14ZAM, 05M20ZBM)                      -->
+<!--                                                                                   -->
+<!-- Copyright (C) 2023                                                                -->
+<!-- Zuse Institute Berlin                                                             -->
+<!-- Contact: Thorsten Koch (koch@zib.de)                                              -->
+<!-- All rights reserved.                                                              -->
+<!--                                                                                   -->
+<!-- This work is licensed under the Creative Commons Attribution 3.0 Unported License.-->
+<!-- To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/ -->
+<!-- or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,-->
+<!-- California, 94041, USA.                                                           -->
+<!--                                                                                   -->
+<!--                         Please note that you have to cite                         -->
+<!-- F. Hennings, "Modeling and solving real-world transient gas network transport     -->
+<!-- problems using mathematical programming",                                         -->
+<!-- Doctoral Thesis, Technische Universität Berlin, 2023                              -->
+<!--                               if you use this data                                -->
+<!--                                                                                   -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+<network xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://gaslib.zib.de/Gas"
+         xsi:schemaLocation="http://gaslib.zib.de/Gas
+                             http://gaslib.zib.de/schema/Gas.xsd"
+         xmlns:framework="http://gaslib.zib.de/Framework">
+  <framework:information>
+    <framework:title>GasLibE_39</framework:title>
+    <framework:type>gas</framework:type>
+    <framework:date>2026-08-31</framework:date>
+    <framework:documentation>Gas network with 39 nodes forming a cycle.</framework:documentation>
+  </framework:information>
+  <framework:nodes>
+
+    <source id="E_NW" alias="Entry_North_West" x="0" y="1400" >
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="25.0"/>
+      <pressureMax unit="bar" value="50.0"/>
+      <flowMin unit="1000m_cube_per_hour" value="0.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="1000.0"/>
+      <gasTemperature unit="Celsius" value="10.0"/>
+      <calorificValue  value="40" unit="MJ_per_m_cube"/>
+      <normDensity value="0.8" unit="kg_per_m_cube"/>
+      <coefficient-A-heatCapacity  value="32.0"/>
+      <coefficient-B-heatCapacity  value="-0.01"/>
+      <coefficient-C-heatCapacity  value="0"/>
+      <molarMass  value="17.5" unit="kg_per_kmol"/>
+      <pseudocriticalPressure  value="46.5" unit="bar"/>
+      <pseudocriticalTemperature  value="199" unit="K"/>
+    </source>
+
+    <source id="E_SE" alias="Entry_South_East" x="1400" y="0" >
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="25.0"/>
+      <pressureMax unit="bar" value="50.0"/>
+      <flowMin unit="1000m_cube_per_hour" value="0.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="1000.0"/>
+      <gasTemperature unit="Celsius" value="10.0"/>
+      <calorificValue  value="40" unit="MJ_per_m_cube"/>
+      <normDensity value="0.8" unit="kg_per_m_cube"/>
+      <coefficient-A-heatCapacity  value="32.0"/>
+      <coefficient-B-heatCapacity  value="-0.01"/>
+      <coefficient-C-heatCapacity  value="0"/>
+      <molarMass  value="17.5" unit="kg_per_kmol"/>
+      <pseudocriticalPressure  value="46.5" unit="bar"/>
+      <pseudocriticalTemperature  value="199" unit="K"/>
+    </source>
+
+    <sink id="X_SW" alias="Exit_South_West" x="0" y="0">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="45.0"/>
+      <pressureMax unit="bar" value="70.0"/>
+      <flowMin unit="1000m_cube_per_hour" value="0.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="1000.0"/>
+    </sink>
+    <sink id="X_NE" alias="Exit_North_East" x="1400" y="1400">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="10.0"/>
+      <pressureMax unit="bar" value="30.0"/>
+      <flowMin unit="1000m_cube_per_hour" value="0.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="1000.0"/>
+    </sink>
+    <sink id="X_M" alias="Exit_Mid" x="700" y="700">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="10.0"/>
+      <pressureMax unit="bar" value="30.0"/>
+      <flowMin unit="1000m_cube_per_hour" value="0.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="1000.0"/>
+    </sink>
+    <sink id="X_E" alias="Exit_East" x="1300" y="400">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="25.0"/>
+      <pressureMax unit="bar" value="70.0"/>
+      <flowMin unit="1000m_cube_per_hour" value="0.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="1000.0"/>
+    </sink>
+    <sink id="X_N" alias="Exit_North" x="400" y="1300">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="25.0"/>
+      <pressureMax unit="bar" value="70.0"/>
+      <flowMin unit="1000m_cube_per_hour" value="0.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="1000.0"/>
+    </sink>
+    <innode id="I_SW_1" alias="Innode_South_West_1" x="250" y="200">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="25.0"/>
+      <pressureMax unit="bar" value="70.0"/>
+    </innode>
+    <innode id="I_SW_2" alias="Innode_South_West_2" x="200" y="200">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="25.0"/>
+      <pressureMax unit="bar" value="70.0"/>
+    </innode>
+    <innode id="I_SW_3" alias="Innode_South_West_3" x="200" y="250">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="25.0"/>
+      <pressureMax unit="bar" value="70.0"/>
+    </innode>
+    <innode id="I_SW_TE" alias="Innode_South_West_To_Exit" x="100" y="100">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="25.0"/>
+      <pressureMax unit="bar" value="70.0"/>
+    </innode>
+    <innode id="I_SE_1" alias="Innode_South_East_1" x="1200" y="250">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="25.0"/>
+      <pressureMax unit="bar" value="70.0"/>
+    </innode>
+    <innode id="I_SE_2" alias="Innode_South_East_2" x="1250" y="150">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="25.0"/>
+      <pressureMax unit="bar" value="70.0"/>
+    </innode>
+    <innode id="I_SE_3" alias="Innode_South_East_3" x="1150" y="200">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="25.0"/>
+      <pressureMax unit="bar" value="70.0"/>
+    </innode>
+    <innode id="I_SE_4" alias="Innode_South_East_4" x="1200" y="200">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="25.0"/>
+      <pressureMax unit="bar" value="70.0"/>
+    </innode>
+    <innode id="I_SE_FE" alias="Innode_South_East_From_Entry" x="1300" y="100">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="25.0"/>
+      <pressureMax unit="bar" value="70.0"/>
+    </innode>
+    <innode id="I_NE_1" alias="Innode_North_East_1" x="1150" y="1200">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="25.0"/>
+      <pressureMax unit="bar" value="70.0"/>
+    </innode>
+    <innode id="I_NE_2" alias="Innode_North_East_2" x="1250" y="1250">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="10.0"/>
+      <pressureMax unit="bar" value="30.0"/>
+    </innode>
+    <innode id="I_NE_3" alias="Innode_North_East_3" x="1200" y="1150">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="25.0"/>
+      <pressureMax unit="bar" value="70.0"/>
+    </innode>
+    <innode id="I_NW_1" alias="Innode_North_West_1" x="200" y="1150">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="25.0"/>
+      <pressureMax unit="bar" value="70.0"/>
+    </innode>
+    <innode id="I_NW_2" alias="Innode_North_West_2" x="150" y="1250">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="25.0"/>
+      <pressureMax unit="bar" value="70.0"/>
+    </innode>
+    <innode id="I_NW_3" alias="Innode_North_West_3" x="250" y="1200">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="25.0"/>
+      <pressureMax unit="bar" value="70.0"/>
+    </innode>
+    <innode id="I_NW_4" alias="Innode_North_West_4" x="200" y="1200">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="25.0"/>
+      <pressureMax unit="bar" value="70.0"/>
+    </innode>
+    <innode id="I_E_1" alias="Innode_East_1" x="1200" y="925">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="25.0"/>
+      <pressureMax unit="bar" value="70.0"/>
+    </innode>
+    <innode id="I_E_2" alias="Innode_East_2" x="1200" y="700">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="25.0"/>
+      <pressureMax unit="bar" value="70.0"/>
+    </innode>
+    <innode id="I_E_3" alias="Innode_East_3" x="1200" y="475">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="25.0"/>
+      <pressureMax unit="bar" value="70.0"/>
+    </innode>
+    <innode id="I_EM_1" alias="Innode_East_Mid_1" x="1150" y="700">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="10.0"/>
+      <pressureMax unit="bar" value="30.0"/>
+    </innode>
+    <innode id="I_EM_2" alias="Innode_East_Mid_2" x="925" y="700">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="10.0"/>
+      <pressureMax unit="bar" value="30.0"/>
+    </innode>
+    <innode id="I_W_1" alias="Innode_West_1" x="200" y="475">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="25.0"/>
+      <pressureMax unit="bar" value="70.0"/>
+    </innode>
+    <innode id="I_W_2" alias="Innode_West_2" x="200" y="700">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="25.0"/>
+      <pressureMax unit="bar" value="70.0"/>
+    </innode>
+    <innode id="I_W_3" alias="Innode_West_3" x="200" y="925">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="25.0"/>
+      <pressureMax unit="bar" value="70.0"/>
+    </innode>
+    <innode id="I_WM_1" alias="Innode_West_Mid_1" x="250" y="700">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="10.0"/>
+      <pressureMax unit="bar" value="30.0"/>
+    </innode>
+    <innode id="I_WM_2" alias="Innode_West_Mid_2" x="475" y="700">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="10.0"/>
+      <pressureMax unit="bar" value="30.0"/>
+    </innode>
+    <innode id="I_N_1" alias="Innode_North_1" x="475" y="1200">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="25.0"/>
+      <pressureMax unit="bar" value="70.0"/>
+    </innode>
+    <innode id="I_N_2" alias="Innode_North_2" x="700" y="1200">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="25.0"/>
+      <pressureMax unit="bar" value="70.0"/>
+    </innode>
+    <innode id="I_N_3" alias="Innode_North_3" x="925" y="1200">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="25.0"/>
+      <pressureMax unit="bar" value="70.0"/>
+    </innode>
+    <innode id="I_S_1" alias="Innode_South_1" x="925" y="200">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="25.0"/>
+      <pressureMax unit="bar" value="70.0"/>
+    </innode>
+    <innode id="I_S_2" alias="Innode_South_2" x="700" y="200">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="25.0"/>
+      <pressureMax unit="bar" value="70.0"/>
+    </innode>
+    <innode id="I_S_3" alias="Innode_South_3" x="475" y="200">
+      <height unit="m" value="0.0"/>
+      <pressureMin unit="bar" value="25.0"/>
+      <pressureMax unit="bar" value="70.0"/>
+    </innode>
+
+  </framework:nodes>
+
+  <framework:connections>
+    <pipe alias="Pipe_South_West_1" id="P_SW_1" from="I_SW_2" to="I_SW_TE">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <length unit="km" value="20.0"/>
+      <diameter unit="mm" value="900.0"/>
+      <roughness unit="mm" value="0.001"/>
+      <heatTransferCoefficient unit="W_per_m_square_per_K" value="2.0"/>
+    </pipe>
+    <pipe alias="Pipe_South_West_2" id="P_SW_2" from="I_SW_TE" to="X_SW">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <length unit="km" value="20.0"/>
+      <diameter unit="mm" value="900.0"/>
+      <roughness unit="mm" value="0.001"/>
+      <heatTransferCoefficient unit="W_per_m_square_per_K" value="2.0"/>
+    </pipe>
+    <pipe alias="Pipe_North_West_1" id="P_NW_1" from="E_NW" to="I_NW_2">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <length unit="km" value="20.0"/>
+      <diameter unit="mm" value="900.0"/>
+      <roughness unit="mm" value="0.001"/>
+      <heatTransferCoefficient unit="W_per_m_square_per_K" value="2.0"/>
+    </pipe>
+    <pipe alias="Pipe_North_East" id="P_NE" from="X_NE" to="I_NE_2">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <length unit="km" value="20.0"/>
+      <diameter unit="mm" value="900.0"/>
+      <roughness unit="mm" value="0.001"/>
+      <heatTransferCoefficient unit="W_per_m_square_per_K" value="2.0"/>
+    </pipe>
+    <pipe alias="Pipe_South_East_1" id="P_SE_1" from="E_SE" to="I_SE_FE">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <length unit="km" value="20.0"/>
+      <diameter unit="mm" value="900.0"/>
+      <roughness unit="mm" value="0.001"/>
+      <heatTransferCoefficient unit="W_per_m_square_per_K" value="2.0"/>
+    </pipe>
+    <pipe alias="Pipe_South_East_2" id="P_SE_2" from="I_SE_FE" to="I_SE_2">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <length unit="km" value="20.0"/>
+      <diameter unit="mm" value="900.0"/>
+      <roughness unit="mm" value="0.001"/>
+      <heatTransferCoefficient unit="W_per_m_square_per_K" value="2.0"/>
+    </pipe>
+    <pipe alias="Pipe_West_1" id="P_W_1" from="I_SW_3" to="I_W_1">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <length unit="km" value="50.0"/>
+      <diameter unit="mm" value="900.0"/>
+      <roughness unit="mm" value="0.001"/>
+      <heatTransferCoefficient unit="W_per_m_square_per_K" value="2.0"/>
+    </pipe>
+    <pipe alias="Pipe_West_2" id="P_W_2" from="I_W_1" to="I_W_2">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <length unit="km" value="50.0"/>
+      <diameter unit="mm" value="900.0"/>
+      <roughness unit="mm" value="0.001"/>
+      <heatTransferCoefficient unit="W_per_m_square_per_K" value="2.0"/>
+    </pipe>
+    <pipe alias="Pipe_West_3" id="P_W_3" from="I_W_2" to="I_W_3">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <length unit="km" value="50.0"/>
+      <diameter unit="mm" value="900.0"/>
+      <roughness unit="mm" value="0.001"/>
+      <heatTransferCoefficient unit="W_per_m_square_per_K" value="2.0"/>
+    </pipe>
+    <pipe alias="Pipe_West_4" id="P_W_4" from="I_W_3" to="I_NW_1">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <length unit="km" value="50.0"/>
+      <diameter unit="mm" value="900.0"/>
+      <roughness unit="mm" value="0.001"/>
+      <heatTransferCoefficient unit="W_per_m_square_per_K" value="2.0"/>
+    </pipe>
+    <pipe alias="Pipe_North_1" id="P_N_1" from="I_NW_3" to="I_N_1">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <length unit="km" value="50.0"/>
+      <diameter unit="mm" value="900.0"/>
+      <roughness unit="mm" value="0.001"/>
+      <heatTransferCoefficient unit="W_per_m_square_per_K" value="2.0"/>
+    </pipe>
+    <pipe alias="Pipe_North_2" id="P_N_2" from="I_N_1" to="I_N_2">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <length unit="km" value="50.0"/>
+      <diameter unit="mm" value="900.0"/>
+      <roughness unit="mm" value="0.001"/>
+      <heatTransferCoefficient unit="W_per_m_square_per_K" value="2.0"/>
+    </pipe>
+    <pipe alias="Pipe_North_3" id="P_N_3" from="I_N_2" to="I_N_3">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <length unit="km" value="50.0"/>
+      <diameter unit="mm" value="900.0"/>
+      <roughness unit="mm" value="0.001"/>
+      <heatTransferCoefficient unit="W_per_m_square_per_K" value="2.0"/>
+    </pipe>
+    <pipe alias="Pipe_North_4" id="P_N_4" from="I_N_3" to="I_NE_1">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <length unit="km" value="50.0"/>
+      <diameter unit="mm" value="900.0"/>
+      <roughness unit="mm" value="0.001"/>
+      <heatTransferCoefficient unit="W_per_m_square_per_K" value="2.0"/>
+    </pipe>
+    <pipe alias="Pipe_East_1" id="P_E_1" from="I_NE_3" to="I_E_1">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <length unit="km" value="50.0"/>
+      <diameter unit="mm" value="900.0"/>
+      <roughness unit="mm" value="0.001"/>
+      <heatTransferCoefficient unit="W_per_m_square_per_K" value="2.0"/>
+    </pipe>
+    <pipe alias="Pipe_East_2" id="P_E_2" from="I_E_1" to="I_E_2">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <length unit="km" value="50.0"/>
+      <diameter unit="mm" value="900.0"/>
+      <roughness unit="mm" value="0.001"/>
+      <heatTransferCoefficient unit="W_per_m_square_per_K" value="2.0"/>
+    </pipe>
+    <pipe alias="Pipe_East_3" id="P_E_3" from="I_E_2" to="I_E_3">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <length unit="km" value="50.0"/>
+      <diameter unit="mm" value="900.0"/>
+      <roughness unit="mm" value="0.001"/>
+      <heatTransferCoefficient unit="W_per_m_square_per_K" value="2.0"/>
+    </pipe>
+    <pipe alias="Pipe_East_4" id="P_E_4" from="I_E_3" to="I_SE_1">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <length unit="km" value="50.0"/>
+      <diameter unit="mm" value="900.0"/>
+      <roughness unit="mm" value="0.001"/>
+      <heatTransferCoefficient unit="W_per_m_square_per_K" value="2.0"/>
+    </pipe>
+    <pipe alias="Pipe_South_1" id="P_S_1" from="I_SE_3" to="I_S_1">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <length unit="km" value="50.0"/>
+      <diameter unit="mm" value="900.0"/>
+      <roughness unit="mm" value="0.001"/>
+      <heatTransferCoefficient unit="W_per_m_square_per_K" value="2.0"/>
+    </pipe>
+    <pipe alias="Pipe_South_2" id="P_S_2" from="I_S_1" to="I_S_2">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <length unit="km" value="50.0"/>
+      <diameter unit="mm" value="900.0"/>
+      <roughness unit="mm" value="0.001"/>
+      <heatTransferCoefficient unit="W_per_m_square_per_K" value="2.0"/>
+    </pipe>
+    <pipe alias="Pipe_South_3" id="P_S_3" from="I_S_2" to="I_S_3">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <length unit="km" value="50.0"/>
+      <diameter unit="mm" value="900.0"/>
+      <roughness unit="mm" value="0.001"/>
+      <heatTransferCoefficient unit="W_per_m_square_per_K" value="2.0"/>
+    </pipe>
+    <pipe alias="Pipe_South_4" id="P_S_4" from="I_S_3" to="I_SW_1">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <length unit="km" value="50.0"/>
+      <diameter unit="mm" value="900.0"/>
+      <roughness unit="mm" value="0.001"/>
+      <heatTransferCoefficient unit="W_per_m_square_per_K" value="2.0"/>
+    </pipe>
+    <pipe alias="Pipe_West_Mid_1" id="P_WM_1" from="I_WM_1" to="I_WM_2">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <length unit="km" value="50.0"/>
+      <diameter unit="mm" value="900.0"/>
+      <roughness unit="mm" value="0.001"/>
+      <heatTransferCoefficient unit="W_per_m_square_per_K" value="2.0"/>
+    </pipe>
+    <pipe alias="Pipe_West_Mid_2" id="P_WM_2" from="I_WM_2" to="X_M">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <length unit="km" value="50.0"/>
+      <diameter unit="mm" value="900.0"/>
+      <roughness unit="mm" value="0.001"/>
+      <heatTransferCoefficient unit="W_per_m_square_per_K" value="2.0"/>
+    </pipe>
+    <pipe alias="Pipe_East_Mid_1" id="P_EM_1" from="I_EM_1" to="I_EM_2">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <length unit="km" value="50.0"/>
+      <diameter unit="mm" value="900.0"/>
+      <roughness unit="mm" value="0.001"/>
+      <heatTransferCoefficient unit="W_per_m_square_per_K" value="2.0"/>
+    </pipe>
+    <pipe alias="Pipe_East_Mid_2" id="P_EM_2" from="I_EM_2" to="X_M">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <length unit="km" value="50.0"/>
+      <diameter unit="mm" value="900.0"/>
+      <roughness unit="mm" value="0.001"/>
+      <heatTransferCoefficient unit="W_per_m_square_per_K" value="2.0"/>
+    </pipe>
+    <pipe alias="Pipe_North_Exit" id="P_NX" from="I_NW_3" to="X_N">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <length unit="km" value="20.0"/>
+      <diameter unit="mm" value="900.0"/>
+      <roughness unit="mm" value="0.001"/>
+      <heatTransferCoefficient unit="W_per_m_square_per_K" value="2.0"/>
+    </pipe>
+    <pipe alias="Pipe_East_Exit" id="P_EX" from="I_SE_1" to="X_E">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <length unit="km" value="20.0"/>
+      <diameter unit="mm" value="900.0"/>
+      <roughness unit="mm" value="0.001"/>
+      <heatTransferCoefficient unit="W_per_m_square_per_K" value="2.0"/>
+    </pipe>
+
+    <valve alias="Valve_South_East_1" id="V_SE_1" from="I_SE_1" to="I_SE_4">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <pressureDifferentialMax unit="bar" value="100"/>
+    </valve>
+    <valve alias="Valve_South_East_2" id="V_SE_2" from="I_SE_3" to="I_SE_4">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <pressureDifferentialMax unit="bar" value="100"/>
+    </valve>
+    <valve alias="Valve_North_East_1" id="V_NE_1" from="I_NE_1" to="I_NE_3">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <pressureDifferentialMax unit="bar" value="100"/>
+    </valve>
+    <valve alias="Valve_North_West_1" id="V_NW_1" from="I_NW_1" to="I_NW_4">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <pressureDifferentialMax unit="bar" value="100"/>
+    </valve>
+    <valve alias="Valve_North_West_2" id="V_NW_2" from="I_NW_3" to="I_NW_4">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <pressureDifferentialMax unit="bar" value="100"/>
+    </valve>
+    <valve alias="Valve_South_West_1" id="V_SW_1" from="I_SW_1" to="I_SW_2">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <pressureDifferentialMax unit="bar" value="100"/>
+    </valve>
+    <valve alias="Valve_South_West_2" id="V_SW_2" from="I_SW_3" to="I_SW_2">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <pressureDifferentialMax unit="bar" value="100"/>
+    </valve>
+    <controlValve alias="ControlValve_East" id="CV_E" from="I_E_2" to="I_EM_1">
+      <flowMin unit="1000m_cube_per_hour" value="0.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <pressureDifferentialMin unit="bar" value="0.0"/>
+      <pressureDifferentialMax unit="bar" value="100.0"/>
+      <pressureInMin value="0.0" unit="bar"/>
+      <pressureOutMax value="100.0" unit="bar"/>
+      <pressureLossIn value="0.0" unit="bar"/>
+      <pressureLossOut value="0.0" unit="bar"/>
+    </controlValve>
+    <controlValve alias="ControlValve_West" id="CV_W" from="I_W_2" to="I_WM_1">
+      <flowMin unit="1000m_cube_per_hour" value="0.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <pressureDifferentialMin unit="bar" value="0.0"/>
+      <pressureDifferentialMax unit="bar" value="100.0"/>
+      <pressureInMin value="0.0" unit="bar"/>
+      <pressureOutMax value="100.0" unit="bar"/>
+      <pressureLossIn value="0.0" unit="bar"/>
+      <pressureLossOut value="0.0" unit="bar"/>
+    </controlValve>
+    <controlValve alias="ControlValve_North_East_1" id="CV_NE_1" from="I_NE_1" to="I_NE_2">
+      <flowMin unit="1000m_cube_per_hour" value="0.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <pressureDifferentialMin unit="bar" value="0.0"/>
+      <pressureDifferentialMax unit="bar" value="100.0"/>
+      <pressureInMin value="0.0" unit="bar"/>
+      <pressureOutMax value="100.0" unit="bar"/>
+      <pressureLossIn value="0.0" unit="bar"/>
+      <pressureLossOut value="0.0" unit="bar"/>
+    </controlValve>
+    <controlValve alias="ControlValve_North_East_2" id="CV_NE_2" from="I_NE_3" to="I_NE_2">
+      <flowMin unit="1000m_cube_per_hour" value="0.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <pressureDifferentialMin unit="bar" value="0.0"/>
+      <pressureDifferentialMax unit="bar" value="100.0"/>
+      <pressureInMin value="0.0" unit="bar"/>
+      <pressureOutMax value="100.0" unit="bar"/>
+      <pressureLossIn value="0.0" unit="bar"/>
+      <pressureLossOut value="0.0" unit="bar"/>
+    </controlValve>
+
+    <compressorStation alias="CompressorStation_North_West" id="CS_NW" from="I_NW_2" to="I_NW_4">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <pressureLossIn value="0.0" unit="bar"/>
+      <pressureLossOut value="0.0" unit="bar"/>
+      <pressureInMin value="0.0" unit="bar"/>
+      <pressureOutMax value="100.0" unit="bar"/>
+    </compressorStation>
+    <compressorStation alias="CompressorStation_South_East" id="CS_SE" from="I_SE_2" to="I_SE_4">
+      <flowMin unit="1000m_cube_per_hour" value="-2000.0"/>
+      <flowMax unit="1000m_cube_per_hour" value="2000.0"/>
+      <pressureLossIn value="0.0" unit="bar"/>
+      <pressureLossOut value="0.0" unit="bar"/>
+      <pressureInMin value="0.0" unit="bar"/>
+      <pressureOutMax value="100.0" unit="bar"/>
+    </compressorStation>
+  </framework:connections>
+
+</network>

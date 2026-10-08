@@ -1,0 +1,1664 @@
+{
+  "schema_version": "1",
+  "created_on": "2026-10-02",
+  "scope": "aboveground thin-wall local gas-pipe sensitivity/replay",
+  "range_semantics": "Explicit finite exploration points, not measured bounds or probability distributions.",
+  "field_training_ready": false,
+  "sources": {
+    "gaslib": {
+      "url": "https://gaslib.zib.de/download/data/GasLib-134-v2-20211129.net",
+      "local_source_key": "gaslib_network",
+      "sha256": "29c629e5d4588b8575fe242f8722ea815b39ecf30245f9f32553f6d0e59e2cb5",
+      "locator": "pipe p_br52 and source gasTemperature/molarMass",
+      "scope": "Greek gas benchmark, not Saudi or saddle measurements"
+    },
+    "trr": {
+      "url": "https://raw.githubusercontent.com/TRR154/InstationaryGasNetworks/main/GasLib-134/GasLib-134-sinus_5000_60-initial.state.gz",
+      "local_source_key": "trr_initial",
+      "sha256": "2baef5f02f34676445bbbf8f6c880bc03b7b9af5414a2bbd8d126e08e32b5444",
+      "locator": "edge p_br52 initial pressure/flow profile",
+      "scope": "benchmark initial state and demand shape, not a field SCADA record"
+    },
+    "sci_steel": {
+      "url": "https://www.steelconstruction.info/images/8/86/GN_3-01.pdf",
+      "title": "SCI P185 Guidance Note 3.01, Revision 3 (2015)",
+      "locator": "PDF page 3, modulus of elasticity and coefficient of thermal expansion",
+      "verified_on": "2026-10-02",
+      "reference_values": {
+        "young_modulus_pa": 210000000000.0,
+        "poisson_ratio": 0.3,
+        "expansion_per_k": 1.2e-05
+      },
+      "scope": "structural bridge steels; generic nominal anchors, not the unknown Qaif pipe steel"
+    },
+    "nist_thermal": {
+      "url": "https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=101567",
+      "title": "NIST-hosted thermal-property material tables",
+      "locator": "Material: Steel, printed page 16",
+      "verified_on": "2026-10-02",
+      "reference_values": {
+        "density_kg_m3": 7850,
+        "at_20_c": {
+          "heat_capacity_j_kgk": 480,
+          "conductivity_w_mk": 62
+        },
+        "at_100_c": {
+          "heat_capacity_j_kgk": 500,
+          "conductivity_w_mk": 59
+        }
+      },
+      "scope": "generic tabulation; not a measured grade/temperature curve for this pipe"
+    },
+    "phmsa_geometry": {
+      "url": "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/data_statistics/pipeline/incident_gas_transmission_gathering_jan2010_present.zip",
+      "sha256": "a58bc2f6f98ba4975f58fffa0139e0ca97036851d84c6613ae5d8483c18458dc",
+      "locator": "selected report 20180059, wall 0.25 in; PIPE_DIAMETER is nominal pipe size",
+      "scope": "geometry/mechanism plausibility only; not inner diameter, a waveform or a calibration"
+    },
+    "qaif_design": {
+      "url": null,
+      "locator": "team saddle concept and inherited reference_template_config.json",
+      "scope": "unmeasured design/research assumptions; no component datasheets or physical tests"
+    },
+    "research_grid": {
+      "url": null,
+      "locator": "evidence-stage explicit low/nominal/high sensitivity choices",
+      "scope": "investigator-selected exploration points; neither confidence intervals nor measured population ranges"
+    },
+    "model": {
+      "url": null,
+      "locator": "qaif_saddle_sim/model.py and reference_episode.py",
+      "scope": "implemented equations/initialization choices; software consistency is not physical calibration"
+    }
+  },
+  "parameters": [
+    {
+      "parameter_id": "config.reference_temperature_k",
+      "scope": "config",
+      "path": "reference_temperature_k",
+      "unit": "K",
+      "nominal": 289.15,
+      "sweep_values": [
+        289.15
+      ],
+      "sweep_min": 289.15,
+      "sweep_max": 289.15,
+      "range_kind": "held_nominal",
+      "evidence_status": "initial_condition",
+      "source_ids": [
+        "gaslib",
+        "model"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Initial condition, not a measured equilibrium. Prepared reference temperatures are overwritten by GasLib 289.15 K; sensitivity replay retains t=0 initialization.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.inner_diameter_m",
+      "scope": "config",
+      "path": "inner_diameter_m",
+      "unit": "m",
+      "nominal": 0.508,
+      "sweep_values": [
+        0.508
+      ],
+      "sweep_min": 0.508,
+      "sweep_max": 0.508,
+      "range_kind": "held_nominal",
+      "evidence_status": "archived_benchmark",
+      "source_ids": [
+        "gaslib"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Effective value from p_br52; template placeholder is overridden by prepare-reference. No diameter sweep changes the pinned benchmark.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.wall_thickness_m",
+      "scope": "config",
+      "path": "wall_thickness_m",
+      "unit": "m",
+      "nominal": 0.015,
+      "sweep_values": [
+        0.01,
+        0.015,
+        0.02
+      ],
+      "sweep_min": 0.01,
+      "sweep_max": 0.02,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "research_grid",
+        "phmsa_geometry"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "10/15/20 mm are research geometry choices with Di/t>20 at 508 mm. PHMSA nominal size and 6.35 mm wall example are context only, not transferred to this asset.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.coating_thickness_m",
+      "scope": "config",
+      "path": "coating_thickness_m",
+      "unit": "m",
+      "nominal": 0.003,
+      "sweep_values": [
+        0.001,
+        0.003,
+        0.006
+      ],
+      "sweep_min": 0.001,
+      "sweep_max": 0.006,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.active_length_m",
+      "scope": "config",
+      "path": "active_length_m",
+      "unit": "m",
+      "nominal": 0.6,
+      "sweep_values": [
+        0.3,
+        0.6,
+        1.2
+      ],
+      "sweep_min": 0.3,
+      "sweep_max": 1.2,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.thermal_sector_angle_rad",
+      "scope": "config",
+      "path": "thermal_sector_angle_rad",
+      "unit": "rad",
+      "nominal": 3.141592653589793,
+      "sweep_values": [
+        1.5707963267948966,
+        3.141592653589793,
+        6.283185307179586
+      ],
+      "sweep_min": 1.5707963267948966,
+      "sweep_max": 6.283185307179586,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.sensor_theta_rad",
+      "scope": "config",
+      "path": "sensor_theta_rad",
+      "unit": "rad",
+      "nominal": 0.0,
+      "sweep_values": [
+        0.0
+      ],
+      "sweep_min": 0.0,
+      "sweep_max": 0.0,
+      "range_kind": "held_nominal",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.young_modulus_pa",
+      "scope": "config",
+      "path": "young_modulus_pa",
+      "unit": "Pa",
+      "nominal": 200000000000.0,
+      "sweep_values": [
+        190000000000.0,
+        200000000000.0,
+        210000000000.0
+      ],
+      "sweep_min": 190000000000.0,
+      "sweep_max": 210000000000.0,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "sci_steel",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "SCI gives a generic 210 GPa reference; inherited 200 GPa retained as research nominal. This does not identify pipe grade or a measured range.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.poisson_ratio",
+      "scope": "config",
+      "path": "poisson_ratio",
+      "unit": "1",
+      "nominal": 0.3,
+      "sweep_values": [
+        0.28,
+        0.3,
+        0.32
+      ],
+      "sweep_min": 0.28,
+      "sweep_max": 0.32,
+      "range_kind": "research_grid",
+      "evidence_status": "general_material_reference",
+      "source_ids": [
+        "sci_steel",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Nominal matches generic structural-steel guidance. The surrounding grid is an investigator choice, not an uncertainty interval for pipeline steel.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.expansion_per_k",
+      "scope": "config",
+      "path": "expansion_per_k",
+      "unit": "1/K",
+      "nominal": 1.2e-05,
+      "sweep_values": [
+        1e-05,
+        1.2e-05,
+        1.4e-05
+      ],
+      "sweep_min": 1e-05,
+      "sweep_max": 1.4e-05,
+      "range_kind": "research_grid",
+      "evidence_status": "general_material_reference",
+      "source_ids": [
+        "sci_steel",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Nominal matches generic structural-steel guidance. The surrounding grid is an investigator choice, not an uncertainty interval for pipeline steel.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.axial_restraint_fraction",
+      "scope": "config",
+      "path": "axial_restraint_fraction",
+      "unit": "1",
+      "nominal": 0.0,
+      "sweep_values": [
+        0,
+        0.5,
+        1
+      ],
+      "sweep_min": 0,
+      "sweep_max": 1,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.steel.density_kg_m3",
+      "scope": "config",
+      "path": "steel.density_kg_m3",
+      "unit": "kg/m3",
+      "nominal": 7800.0,
+      "sweep_values": [
+        7800,
+        7850
+      ],
+      "sweep_min": 7800,
+      "sweep_max": 7850,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "nist_thermal",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Generic NIST-hosted table is a comparison anchor only. Inherited constant nominal/grid are not a measured temperature-dependent material model for this pipe.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.steel.heat_capacity_j_kgk",
+      "scope": "config",
+      "path": "steel.heat_capacity_j_kgk",
+      "unit": "J/(kg K)",
+      "nominal": 500.0,
+      "sweep_values": [
+        450,
+        500,
+        550
+      ],
+      "sweep_min": 450,
+      "sweep_max": 550,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "nist_thermal",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Generic NIST-hosted table is a comparison anchor only. Inherited constant nominal/grid are not a measured temperature-dependent material model for this pipe.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.steel.conductivity_w_mk",
+      "scope": "config",
+      "path": "steel.conductivity_w_mk",
+      "unit": "W/(m K)",
+      "nominal": 45.0,
+      "sweep_values": [
+        40,
+        45,
+        62
+      ],
+      "sweep_min": 40,
+      "sweep_max": 62,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "nist_thermal",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Generic NIST-hosted table is a comparison anchor only. Inherited constant nominal/grid are not a measured temperature-dependent material model for this pipe.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.coating.density_kg_m3",
+      "scope": "config",
+      "path": "coating.density_kg_m3",
+      "unit": "kg/m3",
+      "nominal": 1200.0,
+      "sweep_values": [
+        900,
+        1200,
+        1500
+      ],
+      "sweep_min": 900,
+      "sweep_max": 1500,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.coating.heat_capacity_j_kgk",
+      "scope": "config",
+      "path": "coating.heat_capacity_j_kgk",
+      "unit": "J/(kg K)",
+      "nominal": 1500.0,
+      "sweep_values": [
+        1000,
+        1500,
+        2000
+      ],
+      "sweep_min": 1000,
+      "sweep_max": 2000,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.coating.conductivity_w_mk",
+      "scope": "config",
+      "path": "coating.conductivity_w_mk",
+      "unit": "W/(m K)",
+      "nominal": 0.2,
+      "sweep_values": [
+        0.1,
+        0.2,
+        0.4
+      ],
+      "sweep_min": 0.1,
+      "sweep_max": 0.4,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.solar_absorptivity",
+      "scope": "config",
+      "path": "solar_absorptivity",
+      "unit": "1",
+      "nominal": 0.5,
+      "sweep_values": [
+        0.2,
+        0.5,
+        0.8
+      ],
+      "sweep_min": 0.2,
+      "sweep_max": 0.8,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.emissivity",
+      "scope": "config",
+      "path": "emissivity",
+      "unit": "1",
+      "nominal": 0.9,
+      "sweep_values": [
+        0.6,
+        0.9,
+        0.95
+      ],
+      "sweep_min": 0.6,
+      "sweep_max": 0.95,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.wet_ingress_rate_per_s",
+      "scope": "config",
+      "path": "wet_ingress_rate_per_s",
+      "unit": "1/s",
+      "nominal": 0.001,
+      "sweep_values": [
+        0.0001,
+        0.001,
+        0.01
+      ],
+      "sweep_min": 0.0001,
+      "sweep_max": 0.01,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.wet_drying_rate_per_s",
+      "scope": "config",
+      "path": "wet_drying_rate_per_s",
+      "unit": "1/s",
+      "nominal": 0.0001,
+      "sweep_values": [
+        1e-05,
+        0.0001,
+        0.001
+      ],
+      "sweep_min": 1e-05,
+      "sweep_max": 0.001,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.initial_steel_temperature_k",
+      "scope": "config",
+      "path": "initial_steel_temperature_k",
+      "unit": "K",
+      "nominal": 289.15,
+      "sweep_values": [
+        289.15
+      ],
+      "sweep_min": 289.15,
+      "sweep_max": 289.15,
+      "range_kind": "held_nominal",
+      "evidence_status": "initial_condition",
+      "source_ids": [
+        "gaslib",
+        "model"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Initial condition, not a measured equilibrium. Prepared reference temperatures are overwritten by GasLib 289.15 K; sensitivity replay retains t=0 initialization.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.initial_coating_temperature_k",
+      "scope": "config",
+      "path": "initial_coating_temperature_k",
+      "unit": "K",
+      "nominal": 289.15,
+      "sweep_values": [
+        289.15
+      ],
+      "sweep_min": 289.15,
+      "sweep_max": 289.15,
+      "range_kind": "held_nominal",
+      "evidence_status": "initial_condition",
+      "source_ids": [
+        "gaslib",
+        "model"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Initial condition, not a measured equilibrium. Prepared reference temperatures are overwritten by GasLib 289.15 K; sensitivity replay retains t=0 initialization.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.initial_sensor_temperature_k",
+      "scope": "config",
+      "path": "initial_sensor_temperature_k",
+      "unit": "K",
+      "nominal": 289.15,
+      "sweep_values": [
+        289.15
+      ],
+      "sweep_min": 289.15,
+      "sweep_max": 289.15,
+      "range_kind": "held_nominal",
+      "evidence_status": "initial_condition",
+      "source_ids": [
+        "gaslib",
+        "model"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Initial condition, not a measured equilibrium. Prepared reference temperatures are overwritten by GasLib 289.15 K; sensitivity replay retains t=0 initialization.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.initial_wetness",
+      "scope": "config",
+      "path": "initial_wetness",
+      "unit": "1",
+      "nominal": 0.0,
+      "sweep_values": [
+        0.0
+      ],
+      "sweep_min": 0.0,
+      "sweep_max": 0.0,
+      "range_kind": "held_nominal",
+      "evidence_status": "initial_condition",
+      "source_ids": [
+        "model"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Initial condition, not a measured equilibrium. Prepared reference temperatures are overwritten by GasLib 289.15 K; sensitivity replay retains t=0 initialization.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.initial_sensor_wetness",
+      "scope": "config",
+      "path": "initial_sensor_wetness",
+      "unit": "1",
+      "nominal": 0.0,
+      "sweep_values": [
+        0.0
+      ],
+      "sweep_min": 0.0,
+      "sweep_max": 0.0,
+      "range_kind": "held_nominal",
+      "evidence_status": "initial_condition",
+      "source_ids": [
+        "model"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Initial condition, not a measured equilibrium. Prepared reference temperatures are overwritten by GasLib 289.15 K; sensitivity replay retains t=0 initialization.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.strain_hoop.gain",
+      "scope": "config",
+      "path": "strain_hoop.gain",
+      "unit": "1",
+      "nominal": 0.8,
+      "sweep_values": [
+        0.4,
+        0.8,
+        1.0
+      ],
+      "sweep_min": 0.4,
+      "sweep_max": 1.0,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.strain_hoop.lag_s",
+      "scope": "config",
+      "path": "strain_hoop.lag_s",
+      "unit": "s",
+      "nominal": 0.0,
+      "sweep_values": [
+        0,
+        60,
+        600
+      ],
+      "sweep_min": 0,
+      "sweep_max": 600,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.strain_hoop.bias",
+      "scope": "config",
+      "path": "strain_hoop.bias",
+      "unit": "microstrain",
+      "nominal": 0.0,
+      "sweep_values": [
+        0.0
+      ],
+      "sweep_min": 0.0,
+      "sweep_max": 0.0,
+      "range_kind": "held_nominal",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.strain_hoop.drift_per_s",
+      "scope": "config",
+      "path": "strain_hoop.drift_per_s",
+      "unit": "microstrain/s",
+      "nominal": 0.0,
+      "sweep_values": [
+        0.0
+      ],
+      "sweep_min": 0.0,
+      "sweep_max": 0.0,
+      "range_kind": "held_nominal",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.strain_hoop.noise_std",
+      "scope": "config",
+      "path": "strain_hoop.noise_std",
+      "unit": "microstrain",
+      "nominal": 0.5,
+      "sweep_values": [
+        0,
+        0.5,
+        2
+      ],
+      "sweep_min": 0,
+      "sweep_max": 2,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.strain_hoop.noise_ar1",
+      "scope": "config",
+      "path": "strain_hoop.noise_ar1",
+      "unit": "1",
+      "nominal": 0.2,
+      "sweep_values": [
+        0.2
+      ],
+      "sweep_min": 0.2,
+      "sweep_max": 0.2,
+      "range_kind": "held_nominal",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.strain_hoop.temperature_cross_per_k",
+      "scope": "config",
+      "path": "strain_hoop.temperature_cross_per_k",
+      "unit": "microstrain/K",
+      "nominal": 0.0,
+      "sweep_values": [
+        0.0
+      ],
+      "sweep_min": 0.0,
+      "sweep_max": 0.0,
+      "range_kind": "held_nominal",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.strain_hoop.orientation_from_hoop_rad",
+      "scope": "config",
+      "path": "strain_hoop.orientation_from_hoop_rad",
+      "unit": "rad",
+      "nominal": 0.0,
+      "sweep_values": [
+        0.0
+      ],
+      "sweep_min": 0.0,
+      "sweep_max": 0.0,
+      "range_kind": "held_nominal",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.strain_axial.gain",
+      "scope": "config",
+      "path": "strain_axial.gain",
+      "unit": "1",
+      "nominal": 0.8,
+      "sweep_values": [
+        0.4,
+        0.8,
+        1.0
+      ],
+      "sweep_min": 0.4,
+      "sweep_max": 1.0,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.strain_axial.lag_s",
+      "scope": "config",
+      "path": "strain_axial.lag_s",
+      "unit": "s",
+      "nominal": 0.0,
+      "sweep_values": [
+        0,
+        60,
+        600
+      ],
+      "sweep_min": 0,
+      "sweep_max": 600,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.strain_axial.bias",
+      "scope": "config",
+      "path": "strain_axial.bias",
+      "unit": "microstrain",
+      "nominal": 0.0,
+      "sweep_values": [
+        0.0
+      ],
+      "sweep_min": 0.0,
+      "sweep_max": 0.0,
+      "range_kind": "held_nominal",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.strain_axial.drift_per_s",
+      "scope": "config",
+      "path": "strain_axial.drift_per_s",
+      "unit": "microstrain/s",
+      "nominal": 0.0,
+      "sweep_values": [
+        0.0
+      ],
+      "sweep_min": 0.0,
+      "sweep_max": 0.0,
+      "range_kind": "held_nominal",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.strain_axial.noise_std",
+      "scope": "config",
+      "path": "strain_axial.noise_std",
+      "unit": "microstrain",
+      "nominal": 0.5,
+      "sweep_values": [
+        0,
+        0.5,
+        2
+      ],
+      "sweep_min": 0,
+      "sweep_max": 2,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.strain_axial.noise_ar1",
+      "scope": "config",
+      "path": "strain_axial.noise_ar1",
+      "unit": "1",
+      "nominal": 0.2,
+      "sweep_values": [
+        0.2
+      ],
+      "sweep_min": 0.2,
+      "sweep_max": 0.2,
+      "range_kind": "held_nominal",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.strain_axial.temperature_cross_per_k",
+      "scope": "config",
+      "path": "strain_axial.temperature_cross_per_k",
+      "unit": "microstrain/K",
+      "nominal": 0.0,
+      "sweep_values": [
+        0.0
+      ],
+      "sweep_min": 0.0,
+      "sweep_max": 0.0,
+      "range_kind": "held_nominal",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.strain_axial.orientation_from_hoop_rad",
+      "scope": "config",
+      "path": "strain_axial.orientation_from_hoop_rad",
+      "unit": "rad",
+      "nominal": 1.5707963267948966,
+      "sweep_values": [
+        1.5707963267948966
+      ],
+      "sweep_min": 1.5707963267948966,
+      "sweep_max": 1.5707963267948966,
+      "range_kind": "held_nominal",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.temperature.gain",
+      "scope": "config",
+      "path": "temperature.gain",
+      "unit": "1",
+      "nominal": 1.0,
+      "sweep_values": [
+        1.0
+      ],
+      "sweep_min": 1.0,
+      "sweep_max": 1.0,
+      "range_kind": "held_nominal",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.temperature.lag_s",
+      "scope": "config",
+      "path": "temperature.lag_s",
+      "unit": "s",
+      "nominal": 10.0,
+      "sweep_values": [
+        10,
+        60,
+        600
+      ],
+      "sweep_min": 10,
+      "sweep_max": 600,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.temperature.bias",
+      "scope": "config",
+      "path": "temperature.bias",
+      "unit": "K",
+      "nominal": 0.0,
+      "sweep_values": [
+        0.0
+      ],
+      "sweep_min": 0.0,
+      "sweep_max": 0.0,
+      "range_kind": "held_nominal",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.temperature.drift_per_s",
+      "scope": "config",
+      "path": "temperature.drift_per_s",
+      "unit": "K/s",
+      "nominal": 0.0,
+      "sweep_values": [
+        0.0
+      ],
+      "sweep_min": 0.0,
+      "sweep_max": 0.0,
+      "range_kind": "held_nominal",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.temperature.noise_std",
+      "scope": "config",
+      "path": "temperature.noise_std",
+      "unit": "K",
+      "nominal": 0.1,
+      "sweep_values": [
+        0,
+        0.1,
+        0.5
+      ],
+      "sweep_min": 0,
+      "sweep_max": 0.5,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.temperature.noise_ar1",
+      "scope": "config",
+      "path": "temperature.noise_ar1",
+      "unit": "1",
+      "nominal": 0.2,
+      "sweep_values": [
+        0.2
+      ],
+      "sweep_min": 0.2,
+      "sweep_max": 0.2,
+      "range_kind": "held_nominal",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.temperature.temperature_cross_per_k",
+      "scope": "config",
+      "path": "temperature.temperature_cross_per_k",
+      "unit": "K/K",
+      "nominal": 0.0,
+      "sweep_values": [
+        0.0
+      ],
+      "sweep_min": 0.0,
+      "sweep_max": 0.0,
+      "range_kind": "held_nominal",
+      "evidence_status": "model_definition",
+      "source_ids": [
+        "model"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Serialized Channel default; this field is unused by the temperature/wetness readout. Held at zero, not a measured sensor characteristic.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.temperature.orientation_from_hoop_rad",
+      "scope": "config",
+      "path": "temperature.orientation_from_hoop_rad",
+      "unit": "rad",
+      "nominal": 0.0,
+      "sweep_values": [
+        0.0
+      ],
+      "sweep_min": 0.0,
+      "sweep_max": 0.0,
+      "range_kind": "held_nominal",
+      "evidence_status": "model_definition",
+      "source_ids": [
+        "model"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Serialized Channel default; this field is unused by the temperature/wetness readout. Held at zero, not a measured sensor characteristic.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.wetness.gain",
+      "scope": "config",
+      "path": "wetness.gain",
+      "unit": "1",
+      "nominal": 1.0,
+      "sweep_values": [
+        1.0
+      ],
+      "sweep_min": 1.0,
+      "sweep_max": 1.0,
+      "range_kind": "held_nominal",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.wetness.lag_s",
+      "scope": "config",
+      "path": "wetness.lag_s",
+      "unit": "s",
+      "nominal": 30.0,
+      "sweep_values": [
+        30,
+        300,
+        1800
+      ],
+      "sweep_min": 30,
+      "sweep_max": 1800,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.wetness.bias",
+      "scope": "config",
+      "path": "wetness.bias",
+      "unit": "1",
+      "nominal": 0.0,
+      "sweep_values": [
+        0.0
+      ],
+      "sweep_min": 0.0,
+      "sweep_max": 0.0,
+      "range_kind": "held_nominal",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.wetness.drift_per_s",
+      "scope": "config",
+      "path": "wetness.drift_per_s",
+      "unit": "1/s",
+      "nominal": 0.0,
+      "sweep_values": [
+        0.0
+      ],
+      "sweep_min": 0.0,
+      "sweep_max": 0.0,
+      "range_kind": "held_nominal",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.wetness.noise_std",
+      "scope": "config",
+      "path": "wetness.noise_std",
+      "unit": "1",
+      "nominal": 0.01,
+      "sweep_values": [
+        0,
+        0.01,
+        0.05
+      ],
+      "sweep_min": 0,
+      "sweep_max": 0.05,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.wetness.noise_ar1",
+      "scope": "config",
+      "path": "wetness.noise_ar1",
+      "unit": "1",
+      "nominal": 0.0,
+      "sweep_values": [
+        0.0
+      ],
+      "sweep_min": 0.0,
+      "sweep_max": 0.0,
+      "range_kind": "held_nominal",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.wetness.temperature_cross_per_k",
+      "scope": "config",
+      "path": "wetness.temperature_cross_per_k",
+      "unit": "1/K",
+      "nominal": 0.0,
+      "sweep_values": [
+        0.0
+      ],
+      "sweep_min": 0.0,
+      "sweep_max": 0.0,
+      "range_kind": "held_nominal",
+      "evidence_status": "model_definition",
+      "source_ids": [
+        "model"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Serialized Channel default; this field is unused by the temperature/wetness readout. Held at zero, not a measured sensor characteristic.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.wetness.orientation_from_hoop_rad",
+      "scope": "config",
+      "path": "wetness.orientation_from_hoop_rad",
+      "unit": "rad",
+      "nominal": 0.0,
+      "sweep_values": [
+        0.0
+      ],
+      "sweep_min": 0.0,
+      "sweep_max": 0.0,
+      "range_kind": "held_nominal",
+      "evidence_status": "model_definition",
+      "source_ids": [
+        "model"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Serialized Channel default; this field is unused by the temperature/wetness readout. Held at zero, not a measured sensor characteristic.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "config.packet_loss_probability",
+      "scope": "config",
+      "path": "packet_loss_probability",
+      "unit": "1",
+      "nominal": 0.005,
+      "sweep_values": [
+        0,
+        0.005,
+        0.02
+      ],
+      "sweep_min": 0,
+      "sweep_max": 0.02,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "gas.compressibility_factor",
+      "scope": "gas",
+      "path": "compressibility_factor",
+      "unit": "1",
+      "nominal": 0.9,
+      "sweep_values": [
+        0.8,
+        0.9,
+        1.0
+      ],
+      "sweep_min": 0.8,
+      "sweep_max": 1.0,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "gas.heat_capacity_j_kgk",
+      "scope": "gas",
+      "path": "heat_capacity_j_kgk",
+      "unit": "J/(kg K)",
+      "nominal": 2300.0,
+      "sweep_values": [
+        1800,
+        2300,
+        2800
+      ],
+      "sweep_min": 1800,
+      "sweep_max": 2800,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "gas.viscosity_pa_s",
+      "scope": "gas",
+      "path": "viscosity_pa_s",
+      "unit": "Pa s",
+      "nominal": 1.1e-05,
+      "sweep_values": [
+        8e-06,
+        1.1e-05,
+        1.5e-05
+      ],
+      "sweep_min": 8e-06,
+      "sweep_max": 1.5e-05,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "gas.thermal_conductivity_w_mk",
+      "scope": "gas",
+      "path": "thermal_conductivity_w_mk",
+      "unit": "W/(m K)",
+      "nominal": 0.032,
+      "sweep_values": [
+        0.024,
+        0.032,
+        0.04
+      ],
+      "sweep_min": 0.024,
+      "sweep_max": 0.04,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "gas.wind_height_factor",
+      "scope": "gas",
+      "path": "wind_height_factor",
+      "unit": "1",
+      "nominal": 0.6,
+      "sweep_values": [
+        0.3,
+        0.6,
+        1.0
+      ],
+      "sweep_min": 0.3,
+      "sweep_max": 1.0,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "gas.solar_incidence_factor",
+      "scope": "gas",
+      "path": "solar_incidence_factor",
+      "unit": "1",
+      "nominal": 0.6,
+      "sweep_values": [
+        0.3,
+        0.6,
+        0.9
+      ],
+      "sweep_min": 0.3,
+      "sweep_max": 0.9,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "gas.wet_drive_mm_h_at_one",
+      "scope": "gas",
+      "path": "wet_drive_mm_h_at_one",
+      "unit": "mm/hour",
+      "nominal": 5.0,
+      "sweep_values": [
+        1,
+        5,
+        10
+      ],
+      "sweep_min": 1,
+      "sweep_max": 10,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Inherited nominal preserved. Grid points are declared assumptions, not measured bounds.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "gas.external_pressure_pa",
+      "scope": "gas",
+      "path": "external_pressure_pa",
+      "unit": "Pa",
+      "nominal": 101325.0,
+      "sweep_values": [
+        101325.0
+      ],
+      "sweep_min": 101325.0,
+      "sweep_max": 101325.0,
+      "range_kind": "held_nominal",
+      "evidence_status": "model_definition",
+      "source_ids": [
+        "model"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Assumed external pressure 101325 Pa; no local atmospheric-pressure channel is available.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "gas.effective_axial_exposure_length_m",
+      "scope": "gas",
+      "path": "effective_axial_exposure_length_m",
+      "unit": "m",
+      "nominal": 0.0,
+      "sweep_values": [
+        0,
+        100,
+        1000
+      ],
+      "sweep_min": 0,
+      "sweep_max": 1000,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "qaif_design",
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Assumed gas heat-exchange exposure only; must not exceed midpoint distance. Does not represent sensing/detection reach.",
+      "needed_validation": "Measured component/pipe setup and independently checked transfer response before field use."
+    },
+    {
+      "parameter_id": "scenario.bending_moment_nm",
+      "scope": "scenario",
+      "path": "bending_moment_nm",
+      "unit": "N m",
+      "nominal": 2000,
+      "sweep_values": [
+        500,
+        2000,
+        8000
+      ],
+      "sweep_min": 500,
+      "sweep_max": 8000,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Applied local moment at saddle, not remote damage or defect-size inference. Check added bending stress against a declared elastic stress budget.",
+      "needed_validation": "Scenario-specific physical observations; no historical waveform inferred."
+    },
+    {
+      "parameter_id": "scenario.coupling_multiplier",
+      "scope": "scenario",
+      "path": "coupling_multiplier",
+      "unit": "1",
+      "nominal": 0.7,
+      "sweep_values": [
+        0.4,
+        0.7,
+        0.9
+      ],
+      "sweep_min": 0.4,
+      "sweep_max": 0.9,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Measurement coupling reduction only; does not alter latent pipe physics.",
+      "needed_validation": "Scenario-specific physical observations; no historical waveform inferred."
+    },
+    {
+      "parameter_id": "scenario.duration_s",
+      "scope": "scenario",
+      "path": "duration_s",
+      "unit": "s",
+      "nominal": 21600,
+      "sweep_values": [
+        7200,
+        21600,
+        43200
+      ],
+      "sweep_min": 7200,
+      "sweep_max": 43200,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Constructed phase durations, not recorded incident timings.",
+      "needed_validation": "Scenario-specific physical observations; no historical waveform inferred."
+    },
+    {
+      "parameter_id": "scenario.sample_period_s",
+      "scope": "scenario",
+      "path": "sample_period_s",
+      "unit": "s",
+      "nominal": 600,
+      "sweep_values": [
+        300,
+        600,
+        1800
+      ],
+      "sweep_min": 300,
+      "sweep_max": 1800,
+      "range_kind": "research_grid",
+      "evidence_status": "research_assumption",
+      "source_ids": [
+        "research_grid"
+      ],
+      "qaif_calibrated": false,
+      "transfer_limit": "Internal integration/replay sampling; archived forcing is still hourly.",
+      "needed_validation": "Scenario-specific physical observations; no historical waveform inferred."
+    }
+  ],
+  "constraints": [
+    "inner_diameter_m/wall_thickness_m>20",
+    "positive temperatures and material properties",
+    "effective_axial_exposure_length_m <= benchmark midpoint distance",
+    "declared elastic stress budget checked for local mechanical scenarios",
+    "No crack/leak/depth/detection-radius label from these parameters."
+  ]
+}

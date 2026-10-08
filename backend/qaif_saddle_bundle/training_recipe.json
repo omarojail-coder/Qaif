@@ -1,0 +1,101 @@
+{
+  "version": "1",
+  "status": "provisional_user_approved_bundle_416_mechanical_frozen_other_heads",
+  "seed": 20261004,
+  "patterns_per_group": 16,
+  "duration_s": 1200,
+  "sample_interval_s": 5,
+  "baseline_samples": 24,
+  "window_samples": 12,
+  "minimum_window_valid_fraction": 0.75,
+  "minimum_baseline_valid_fraction": 0.75,
+  "signals": [
+    "mechanical_anomaly",
+    "thermal_anomaly",
+    "wetness_anomaly",
+    "h2s_anomaly"
+  ],
+  "label_policy": {
+    "id": "counterfactual_delivered_signal_deadband_v1",
+    "basis": "noise-free delivered response compared with a mechanism-specific control; never defect presence alone",
+    "mechanical_anomaly": {
+      "absent_max": 1.0,
+      "present_min": 5.0,
+      "unit": "microstrain",
+      "basis": "max absolute hoop/axial delivered strain difference after removing crack only, retaining identical thermal and operating inputs"
+    },
+    "thermal_anomaly": {
+      "absent_max": 0.3,
+      "present_min": 1.5,
+      "unit": "K",
+      "basis": "delivered temperature difference after removing injected excess fluid heating only; normal operating heat remains"
+    },
+    "wetness_anomaly": {
+      "absent_max": 0.03,
+      "present_min": 0.12,
+      "unit": "index",
+      "basis": "delivered wetness above a dry interface; wetness noise/bias/drift excluded"
+    },
+    "h2s_anomaly": {
+      "absent_max": 0.001,
+      "present_min": 0.005,
+      "unit": "ppm",
+      "basis": "noise-free H2S response attributable to local concentration; leak with zero H2S or negligible arrival can be absent"
+    },
+    "unknown": "between thresholds or insufficient channel observations; removed per head",
+    "thresholds_defined_before_generation": true,
+    "thresholds_are_empirical_device_detection_limits": false
+  },
+  "prediction_threshold": 0.5,
+  "alarm_persistence_samples": 3,
+  "split_policy": "whole device/background parameter group held out; all paired controls and windows stay in the same split",
+  "feature_policy": "numeric observations and causal quality only; no forcing, truth, control, identifiers, absolute time, or future rows",
+  "per_head_feature_scope": {
+    "mechanical_anomaly": [
+      "strain_hoop_microstrain",
+      "strain_axial_microstrain",
+      "temperature_k",
+      "paired_strain_differences"
+    ],
+    "thermal_anomaly": [
+      "strain_hoop_microstrain",
+      "strain_axial_microstrain",
+      "temperature_k",
+      "paired_strain_differences"
+    ],
+    "wetness_anomaly": [
+      "wetness_index"
+    ],
+    "h2s_anomaly": [
+      "h2s_ppm"
+    ]
+  },
+  "baseline_assumption": "first 120 seconds are a known-normal initialization; predictor must abstain until it has enough prior baseline readings",
+  "runtime": "Official XGBoost 3.0.5 CPU DLL with original observation-only features; local Windows prototype",
+  "limits": [
+    "all splits use the same simulator and crack geometry; not independent measured sources",
+    "gas fixed 20 C; uncalibrated transport and saddle transfer",
+    "prototype label policy selected by engineering judgement, not measurement",
+    "no guaranteed detection of every crack/leak or general fault diagnosis"
+  ],
+  "training_provenance": {
+    "mechanical_anomaly": {
+      "recipe": "saddle_mechanical_thermal_data_xgb_v21/experiment_recipe.json",
+      "sha256": "97e0e636105c3186900b869f2b32dccb4a528273234180ee6037a9f1832481de",
+      "training_episodes": 416
+    },
+    "thermal_anomaly": {
+      "recipe": "saddle_joint_gru_v6/experiment_recipe.json",
+      "sha256": "6f320f86c333336147ee4d4486a0c62f15a1e8db4aad0e2b429995024875aa1e",
+      "model": "saddle_joint_gru_v6/models/expanded_thermal_xgboost.json"
+    },
+    "wetness_anomaly": {
+      "recipe": "saddle_ai_xgboost_v1/training_recipe.json",
+      "sha256": "f9fb9cd668b21ed18e95b9574cf1499f0f65d407e34cde24af5d7d0076e63406"
+    },
+    "h2s_anomaly": {
+      "recipe": "saddle_ai_xgboost_v1/training_recipe.json",
+      "sha256": "f9fb9cd668b21ed18e95b9574cf1499f0f65d407e34cde24af5d7d0076e63406"
+    }
+  }
+}

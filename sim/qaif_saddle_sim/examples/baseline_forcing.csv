@@ -1,0 +1,9 @@
+timestamp_s,pressure_pa,fluid_temperature_k,ambient_temperature_k,sky_temperature_k,solar_w_m2,solar_incidence,h_inner_w_m2k,h_outer_w_m2k,wet_drive,wet_path_open,drying_rate_multiplier,bending_moment_nm,bending_direction_rad,hoop_coupling_multiplier,axial_coupling_multiplier,temperature_flatline,wetness_flatline,force_missing,event_type
+0,1000000,293.15,293.15,293.15,0,0,200,10,0,0,1,0,0,1,1,0,0,0,normal_operation
+60,1200000,293.15,293.15,293.15,0,0,200,10,0,0,1,0,0,1,1,0,0,0,normal_operation
+120,1200000,293.15,303.15,298.15,600,1,200,8,0,0,1,0,0,1,1,0,0,0,normal_environment
+180,1200000,293.15,303.15,298.15,600,1,200,8,0,0,1,0,0,1,1,0,0,0,normal_environment
+240,1200000,293.15,303.15,298.15,600,1,200,8,1,0,1,0,0,1,1,0,0,0,normal_environment
+300,1200000,293.15,303.15,298.15,600,1,200,8,1,0,1,0,0,1,1,0,0,0,normal_environment
+360,1200000,293.15,303.15,298.15,600,1,200,8,1,0,1,0,0,1,1,0,0,0,normal_environment
+420,1200000,293.15,303.15,298.15,600,1,200,8,1,0,1,0,0,1,1,0,0,0,normal_environment
